@@ -1,3 +1,4 @@
+import { Auth0Provider } from "@auth0/auth0-react";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
@@ -10,7 +11,13 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <MainRoutes />
+      <Auth0Provider
+        domain="tiktaco.eu.auth0.com"
+        clientId="XaAlkORfTLA9DPs6wxPS0S2kW3EGjVb9"
+        redirectUri={window.location.origin}
+      >
+        <MainRoutes />
+      </Auth0Provider>
     </BrowserRouter>
   </React.StrictMode>
 );
