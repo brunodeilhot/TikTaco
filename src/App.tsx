@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 import services from "./services"
 
 const App = () => {
@@ -7,6 +8,6 @@ const App = () => {
     services.feedRecipes()
   }, [])
 
-  return <div>Project started</div>
+  return <Outlet />
 }
 export default App;
