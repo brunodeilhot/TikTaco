@@ -1,7 +1,11 @@
+import { Grid } from "@mui/material";
+import ActionButtons from "../../components/ActionButtons";
 
 
 const Home = () => (
-    <div>Home Page</div>
+    <Grid>
+        <ActionButtons />
+    </Grid>
 );
 
 export default Home;
