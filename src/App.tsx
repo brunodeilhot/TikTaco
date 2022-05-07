@@ -5,9 +5,9 @@ import services from "./services";
 import { responsiveDarkTheme, responsiveLightTheme } from "./Theme";
 
 const App = () => {
-  useEffect(() => {
-    services.feedRecipes();
-  }, []);
+  // useEffect(() => {
+  //   services.feedRecipes();
+  // }, []);
 
   return (
     <ThemeProvider theme={responsiveLightTheme}>
