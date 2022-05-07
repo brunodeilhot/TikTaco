@@ -22,16 +22,12 @@ const TopTab = styled(Tab)(({ theme }) => ({
     fontWeight: 700,
     textShadow: "0px 3px 3px rgba(0, 0, 0, .35)",
     "&.Mui-selected": {
-        color: "#EFEFEF"
+        color: "#FAFAFA"
     }
 }))
 
 const FeedTabs: React.FC<Props> = ({ feed, changeFeed }) => {
   return (
-    // <Tabs centered value={feed} onChange={changeFeed} sx={{ position: "absolute", top: 0, left: 0, right: 0, zIndex: "appBar", borderBottom: 0 }}>
-    //   <Tab label="following" />
-    //   <Tab label="discover" />
-    // </Tabs>
     <TopTabs centered value={feed} onChange={changeFeed}>
       <TopTab label="following" sx={{  }} />
       <TopTab label="discover" />

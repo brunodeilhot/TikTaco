@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import followingFeedReducer from "./followingFeedSlice";
+import feedReducer from "./feedSlice";
 
 export const store = configureStore({
   reducer: {
-    followingFeed: followingFeedReducer,
+    feed: feedReducer,
   },
 });
 

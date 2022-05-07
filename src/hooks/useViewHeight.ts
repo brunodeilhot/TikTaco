@@ -17,11 +17,9 @@ const useViewHeight = () => {
   };
 
   useEffect(() => {
-    console.log("event started");
     window.addEventListener("resize", handleDebounce);
 
     return () => {
-      console.log("event finished");
       window.removeEventListener("resize", handleDebounce);
     };
   }, []);
