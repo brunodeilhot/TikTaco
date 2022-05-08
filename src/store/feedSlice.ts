@@ -6,6 +6,7 @@ export interface FeedState {
   followActiveRecipe: number;
   discovRecipes: IRecipePreview[];
   discovActiveRecipe: number;
+  activeFeed: number;
 }
 
 const initialState: FeedState = {
@@ -13,6 +14,7 @@ const initialState: FeedState = {
   followActiveRecipe: 0,
   discovRecipes: [],
   discovActiveRecipe: 0,
+  activeFeed: 1,
 };
 
 export const feedSlice = createSlice({
@@ -33,6 +35,9 @@ export const feedSlice = createSlice({
       // state.discovRecipes = state.discovRecipes.concat(action.payload);
       state.discovRecipes = action.payload;
     },
+    updateActiveFeed: (state, action: PayloadAction<number>) => {
+      state.activeFeed = action.payload;
+    }
   },
 });
 
@@ -41,6 +46,7 @@ export const {
   followAddRecipes,
   updateDiscovActRec,
   discovAddRecipes,
+  updateActiveFeed,
 } = feedSlice.actions;
 
 export default feedSlice.reducer;

@@ -11,12 +11,13 @@ import {
   updateFollowActRec,
   updateDiscovActRec,
   followAddRecipes,
+  updateActiveFeed,
 } from "../../store/feedSlice";
 import FeedTabs from "../../components/FeedTabs";
 
 const Home = () => {
-  const [feed, setFeed] = useState<number>(1);
   const viewHeight = useViewHeight();
+  const feed = useAppSelector((state) => state.feed.activeFeed);
   const followActiveRecipe = useAppSelector(
     (state) => state.feed.followActiveRecipe
   );
@@ -85,45 +86,43 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(recipes)
-  }, [recipes])
+    console.log(recipes);
+  }, [recipes]);
 
   const changeFeed = (_event: React.SyntheticEvent, newFeed: number) => {
-    setFeed(newFeed);
+    dispatch(updateActiveFeed(newFeed));
   };
 
   return (
-    <div>
-      <Grid container>
-        <FeedTabs feed={feed} changeFeed={changeFeed} />
+    <Grid container>
+      <FeedTabs feed={feed} changeFeed={changeFeed} />
 
-        <Swiper
-          style={{ width: "100%" }}
-          height={viewHeight}
-          modules={[Keyboard]}
-          direction={"vertical"}
-          keyboard={{
-            enabled: true,
-          }}
-          onActiveIndexChange={(swiper) =>
-            dispatch(
-              feed === 0
-                ? updateFollowActRec(swiper.activeIndex)
-                : updateDiscovActRec(swiper.activeIndex)
-            )
-          }
-          initialSlide={feed === 0 ? followActiveRecipe : discovActiveRecipe}
-        >
-          {recipes.map((recipe: IRecipePreview) => (
-            <SwiperSlide key={recipe._id}>
-              <Recipe recipe={recipe} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+      <Swiper
+        style={{ width: "100%" }}
+        height={viewHeight}
+        modules={[Keyboard]}
+        direction={"vertical"}
+        keyboard={{
+          enabled: true,
+        }}
+        onActiveIndexChange={(swiper) =>
+          dispatch(
+            feed === 0
+              ? updateFollowActRec(swiper.activeIndex)
+              : updateDiscovActRec(swiper.activeIndex)
+          )
+        }
+        initialSlide={feed === 0 ? followActiveRecipe : discovActiveRecipe}
+      >
+        {recipes.map((recipe: IRecipePreview) => (
+          <SwiperSlide key={recipe._id}>
+            <Recipe recipe={recipe} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-        <ActionButtons />
-      </Grid>
-    </div>
+      <ActionButtons />
+    </Grid>
   );
 };
 

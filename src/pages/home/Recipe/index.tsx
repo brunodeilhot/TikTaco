@@ -1,9 +1,8 @@
-import {
-  AddCircleRounded,
-  FavoriteRounded,
-  StarRounded,
-} from "@mui/icons-material";
-import { Avatar, Badge, Grid, IconButton, Typography } from "@mui/material";
+import { Avatar, Grid, IconButton, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import FavoriteBorder from "../../../icons/FavoriteBorder";
+import LikeBorder from "../../../icons/LikeBorder";
+import ProfileFollow from "../../../icons/ProfileFollow";
 import { IRecipePreview } from "../../../models/recipe";
 
 interface Props {
@@ -11,8 +10,8 @@ interface Props {
 }
 
 const Recipe: React.FC<Props> = ({ recipe }) => {
-  const imagePath = "http://192.168.1.3:3000/images/recipes/feed";
-  const AvatarImg = "http://192.168.1.3:3000/images/users/avatar-pic.png";
+  const imagePath = "http://192.168.1.4:3000/images/recipes/feed";
+  const AvatarImg = "http://192.168.1.4:3000/images/users/avatar-pic.png";
   const { title, picture, meta } = recipe;
 
   const handleClickAvatar = () => {
@@ -25,6 +24,8 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
 
   return (
     <Grid
+    component={Link}
+    to={`/recipe/${recipe._id}`}
       container
       width="100%"
       height="100%"
@@ -37,7 +38,7 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <Grid container flexWrap="nowrap" marginBottom="76px">
+      <Grid container flexWrap="nowrap" marginBottom="76px" zIndex="appBar">
         <Grid xs={9} item paddingLeft={4} alignSelf="flex-end">
           <Typography
             component="h1"
@@ -58,21 +59,43 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
           flexDirection="column"
           flexWrap="nowrap"
           alignItems="center"
+          gap={1}
+          pl={1}
         >
-          <Grid item position="relative">
+          <Grid item position="relative" mb={2}>
             <IconButton onClick={handleClickAvatar}>
-              <Avatar alt="Maria Chang" src={AvatarImg} />
+              <Avatar
+                alt="Maria Chang"
+                src={AvatarImg}
+                sx={{ width: 66, height: 66, border: "3px solid #FFF" }}
+              />
             </IconButton>
-            <IconButton onClick={handleClickFollow} sx={{ position: "absolute", padding: 0, bottom: -2, left: 18 }}>
-                  <AddCircleRounded fontSize="small" />
+            <IconButton
+              onClick={handleClickFollow}
+              sx={{ position: "absolute", padding: 0, bottom: 0, left: 31 }}
+            >
+              <ProfileFollow viewBox="0 0 16 16" fontSize="small" />
             </IconButton>
           </Grid>
 
-          <IconButton>
-            <FavoriteRounded fontSize="large" />
+          <IconButton sx={{ position: "relative", paddingBottom: 2.5 }}>
+            <LikeBorder sx={{ fontSize: 40 }} />
+            <Typography
+              variant="body2"
+              component="span"
+              position="absolute"
+              top={50}
+              fontWeight={700}
+              sx={{
+                color: "#FAFAFA",
+                textShadow: "0px 3px 3px rgba(0, 0, 0, 0.25)",
+              }}
+            >
+              {meta.likes}
+            </Typography>
           </IconButton>
           <IconButton>
-            <StarRounded fontSize="large" />
+            <FavoriteBorder sx={{ fontSize: 46 }} />
           </IconButton>
         </Grid>
       </Grid>
