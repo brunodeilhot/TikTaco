@@ -1,5 +1,25 @@
 import axios from "axios";
-import { feedRecipes } from "./recipes"
+import {
+  createRecipe,
+  updateRecipe,
+  findRecipePublic,
+  findRecipePrivate,
+  findRecipeByUser,
+  feedRecipes,
+  addLike,
+  removeLike,
+  addStar,
+  removeStar,
+} from "./recipes";
+import {
+  createUser,
+  updateUser,
+  findUserByEmail,
+  findUserById,
+  addFollower,
+  removeFollower,
+  totalLikes,
+} from "./user";
 
 export const baseURL = "http://localhost:8000";
 
@@ -12,7 +32,23 @@ export const api = axios.create({
 });
 
 const services = {
-  feedRecipes
+  createRecipe,
+  updateRecipe,
+  findRecipePublic,
+  findRecipePrivate,
+  findRecipeByUser,
+  feedRecipes,
+  addLike,
+  removeLike,
+  addStar,
+  removeStar,
+  createUser,
+  updateUser,
+  findUserByEmail,
+  findUserById,
+  addFollower,
+  removeFollower,
+  totalLikes
 };
 
 export default services;
