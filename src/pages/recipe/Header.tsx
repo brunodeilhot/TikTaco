@@ -24,9 +24,8 @@ const Header: React.FC<Props> = ({ handleTransition, picture }) => (
   >
     <Fab
       aria-label="close"
-      color="primary"
       onClick={handleTransition}
-      sx={{ backgroundColor: "secondary.main", mr: 2, mt: 3, p: 0.5 }}
+      sx={{ backgroundColor: "background.default", mr: 2, mt: 3, p: 0.5 }}
     >
       <CloseRounded color="primary" sx={{ fontSize: 40 }} />
     </Fab>
