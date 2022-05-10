@@ -60,7 +60,7 @@ const lightTheme = createTheme(baseTheme, {
       styleOverrides: {
         root: {
           "&:hover": {
-            backgroundColor: "#FFFFFF",
+            backgroundColor: "#FAFAFA",
           },
         },
       },

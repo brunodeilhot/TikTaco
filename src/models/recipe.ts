@@ -17,8 +17,8 @@ export interface IRecipe {
     ingredients: Ingredient[];
     created_at: number;
     edited_at: number;
-    user: User;
-    meta: Meta
+    user: IUser;
+    meta: IMeta
 }
 
 export interface Ingredient {
@@ -26,12 +26,12 @@ export interface Ingredient {
     quantity: string;
 }
 
-interface User {
+interface IUser {
     _id: string;
     username: string;
 }
 
-interface Meta {
+interface IMeta {
     totalLikes: string[];
     totalViews: string[];
 }
@@ -42,4 +42,20 @@ export interface IDiet {
     vegan: boolean;
     vegetarian: boolean;
     keto: boolean;
+}
+
+export interface ICreateRecipe {
+  title: string;
+  picture: string;
+  servings: number;
+  time: number;
+  ingredients: Ingredient[];
+  steps: string[];
+  user: string;
+  description?: string;
+  diet?: string[];
+}
+
+export interface IUpdateRecipe extends ICreateRecipe {
+    id: string;
 }
