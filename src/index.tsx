@@ -1,9 +1,11 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import MainRoutes from "./Routes";
+import { store } from "./store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,13 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Auth0Provider
-        domain="tiktaco.eu.auth0.com"
-        clientId="XaAlkORfTLA9DPs6wxPS0S2kW3EGjVb9"
-        redirectUri={window.location.origin}
-      >
+      <Provider store={store}>
         <MainRoutes />
-      </Auth0Provider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -1,15 +1,11 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { Grid } from "@mui/material";
+import ActionButtons from "../../components/ActionButtons";
 
-const Profile = () => {
-
-    const { loginWithRedirect  } = useAuth0();
-
-  return (
-    <>
-      <div>Profile Page</div>
-      <button onClick={() => loginWithRedirect ()}>Login</button>
-    </>
-  );
-};
+const Profile = () => (
+  <Grid>
+    <div>Profile Page</div>
+    <ActionButtons />
+  </Grid>
+);
 
 export default Profile;
