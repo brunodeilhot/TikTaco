@@ -12,7 +12,7 @@ interface Props {
 const Recipe: React.FC<Props> = ({ recipe }) => {
   const imagePath = "http://192.168.1.4:3000/images/recipes/feed";
   const AvatarImg = "http://192.168.1.4:3000/images/users/avatar-pic.png";
-  const { title, picture, meta } = recipe;
+  const { _id, title, picture, meta } = recipe;
 
   const handleClickAvatar = () => {
     console.log("avatar");
@@ -24,8 +24,6 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
 
   return (
     <Grid
-    component={Link}
-    to={`/recipe/${recipe._id}`}
       container
       width="100%"
       height="100%"
@@ -38,8 +36,26 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <Grid container flexWrap="nowrap" marginBottom="76px" zIndex="appBar">
-        <Grid xs={9} item paddingLeft={4} alignSelf="flex-end">
+      <Grid
+        container
+        flexWrap="nowrap"
+        marginBottom="76px"
+        zIndex="appBar"
+        height="100%"
+      >
+        <Grid
+          xs={9}
+          container
+          item
+          flexDirection="column"
+          flexWrap="nowrap"
+          paddingLeft={4}
+          justifyContent="flex-end"
+          height="100%"
+          component={Link}
+          to={`/recipe/${_id}`}
+          sx={{ textDecoration: "none" }}
+        >
           <Typography
             component="h1"
             variant="h4"
@@ -51,6 +67,20 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
           >
             {title}
           </Typography>
+          <Typography
+          pt={2}
+          mb={0}
+            paragraph
+            textTransform="uppercase"
+            fontWeight={700}
+            sx={{
+              fontSize: 12,
+              color: "#FAFAFA",
+              textShadow: "0px 3px 3px rgba(0, 0, 0, 0.25)",
+            }}
+          >
+            view recipe step by step
+          </Typography>
         </Grid>
         <Grid
           xs={3}
@@ -61,7 +91,16 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
           alignItems="center"
           gap={1}
           pl={1}
+          justifyContent="flex-end"
+          height="100%"
         >
+          <Grid
+            item
+            width="100%"
+            height="100%"
+            component={Link}
+            to={`/recipe/${_id}`}
+          ></Grid>
           <Grid item position="relative" mb={2}>
             <IconButton onClick={handleClickAvatar}>
               <Avatar
