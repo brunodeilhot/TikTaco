@@ -1,3 +1,5 @@
+import { IUserMeta } from "./user";
+
 export interface IRecipePreview {
     _id: string;
     title: string;
@@ -32,8 +34,10 @@ interface IUser {
 }
 
 interface IMeta {
-    totalLikes: string[];
-    totalViews: string[];
+    likes: IUserMeta[];
+    totalLikes: number;
+    views: IUserMeta[];
+    totalViews: number;
 }
 
 export interface IDiet {
@@ -56,6 +60,19 @@ export interface ICreateRecipe {
   diet?: string[];
 }
 
-export interface IUpdateRecipe extends ICreateRecipe {
+export interface IUpdateRecipe {
     id: string;
+    title?: string;
+    picture?: string;
+    servings?: number;
+    time?: number;
+    ingredients?: Ingredient[];
+    steps?: string[];
+    description?: string;
+    diet?: string[];
+}
+
+export interface IRecipeMeta {
+    recipe: string;
+    date: Date;
 }

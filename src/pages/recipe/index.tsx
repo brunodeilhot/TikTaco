@@ -65,8 +65,10 @@ const Recipe: React.FC = () => {
       username: "Bambi",
     },
     meta: {
-      totalLikes: [],
-      totalViews: [],
+      likes: [],
+      views: [],
+      totalLikes: 0,
+      totalViews: 0,
     },
   });
 

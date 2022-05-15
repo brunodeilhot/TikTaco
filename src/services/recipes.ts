@@ -1,7 +1,7 @@
-import { IRecipe, IUpdateRecipe } from "../models/recipe";
+import { ICreateRecipe, IRecipe, IUpdateRecipe } from "../models/recipe";
 import { api, baseURL } from "./index";
 
-export function createRecipe({
+export const createRecipe = async ({
   title,
   picture,
   servings,
@@ -11,8 +11,8 @@ export function createRecipe({
   user,
   description,
   diet,
-}: IRecipe) {
-  api
+}: ICreateRecipe): Promise<IRecipe> => {
+  return api
     .post(`${baseURL}/recipes/create`, {
       title: title,
       picture: picture,
@@ -24,11 +24,17 @@ export function createRecipe({
       description: description,
       diet: diet,
     })
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function updateRecipe({
+export const updateRecipe = async ({
   id,
   title,
   picture,
@@ -38,8 +44,8 @@ export function updateRecipe({
   steps,
   description,
   diet,
-}: IUpdateRecipe) {
-  api
+}: IUpdateRecipe): Promise<IRecipe> => {
+  return api
     .put(`${baseURL}/recipes/update/${id}`, {
       id: id,
       title: title,
@@ -51,62 +57,124 @@ export function updateRecipe({
       description: description,
       diet: diet,
     })
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function findRecipePublic(id: string, userId: string) {
-  api
-    .get(`${baseURL}/recipes/find/id/${id}/${userId}/public`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
-
-export function findRecipePrivate(id: string, userId: string) {
-  api
-    .get(`${baseURL}/recipes/find/id/${id}/${userId}/private`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
-
-export function findRecipeByUser(userId: string, limit: number = 10) {
-  api
-    .get(`${baseURL}/recipes/find/user/${userId}/${limit}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
-
-export function feedRecipes(limit: number = 10) {
+export const findRecipeById = async (
+  id: string,
+  userId: string
+): Promise<IRecipe> => {
   return api
-    .get(`/recipes/feed${limit}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+    .get(`${baseURL}/recipes/find/id/${id}/${userId}`)
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function addLike(id: string, userId: string) {
-  api
-    .post(`${baseURL}/recipes/${id}/add/${userId}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+export const findRecipeByUser = async (
+  userId: string,
+  limit: number = 10
+): Promise<IRecipe[]> => {
+  return api
+    .get(`${baseURL}/recipes/find/user/${userId}/${limit}`)
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function removeLike(id: string, userId: string) {
-  api
-    .delete(`${baseURL}/recipes/${id}/remove/${userId}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+export const feedRecipes = async (
+  limit: number = 10,
+  user: string | null = null
+): Promise<IRecipe[]> => {
+  return api
+    .get(`/recipes/feed/${limit}/${user}`)
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function addStar(id: string, recipeId: string) {
-  api
-    .post(`${baseURL}/user/meta/stars/${id}/add/${recipeId}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+export const addLike = async (
+  id: string,
+  userId: string
+): Promise<number | string> => {
+  return api
+    .post(`${baseURL}/recipes/meta/likes/${id}/add/${userId}`)
+    .then((response) => {
+      console.log(response);
+      return response.status;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function removeStar(id: string, recipeId: string) {
-  api
-    .delete(`${baseURL}/user/meta/stars/${id}/remove/${recipeId}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+export const removeLike = async (
+  id: string,
+  userId: string
+): Promise<number | string> => {
+  return api
+    .delete(`${baseURL}/recipes/meta/likes/${id}/remove/${userId}`)
+    .then((response) => {
+      console.log(response);
+      return response.status;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
+
+export const addStar = async (
+  userId: string,
+  recipeId: string
+): Promise<number | string> => {
+  return api
+    .post(`${baseURL}/user/meta/stars/${userId}/add/${recipeId}`)
+    .then((response) => {
+      console.log(response);
+      return response.status;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
+
+export const removeStar = async (
+  userId: string,
+  recipeId: string
+): Promise<number | string> => {
+  return api
+    .delete(`${baseURL}/user/meta/stars/${userId}/remove/${recipeId}`)
+    .then((response) => {
+      console.log(response);
+      return response.status;
+    })
+    .catch((error) => {
+      console.error(error.message);
+      return error.message;
+    });
+};

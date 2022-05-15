@@ -2,8 +2,7 @@ import axios from "axios";
 import {
   createRecipe,
   updateRecipe,
-  findRecipePublic,
-  findRecipePrivate,
+  findRecipeById,
   findRecipeByUser,
   feedRecipes,
   addLike,
@@ -34,8 +33,7 @@ export const api = axios.create({
 const services = {
   createRecipe,
   updateRecipe,
-  findRecipePublic,
-  findRecipePrivate,
+  findRecipeById,
   findRecipeByUser,
   feedRecipes,
   addLike,

@@ -85,9 +85,9 @@ const Home = () => {
     );
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log(recipes);
-  }, [recipes]);
+  // useEffect(() => {
+  //   console.log(recipes);
+  // }, [recipes]);
 
   const changeFeed = (_event: React.SyntheticEvent, newFeed: number) => {
     dispatch(updateActiveFeed(newFeed));

@@ -1,15 +1,15 @@
-import { ICreateUser, IUpdateUser } from "./../models/user";
+import { ICreateUser, IUpdateUser, IUser } from "./../models/user";
 import { api, baseURL } from "./index";
 
-export function createUser({
+export const createUser = async ({
   name,
   email,
   username,
   birthday,
   picture,
   bio,
-}: ICreateUser) {
-  api
+}: ICreateUser): Promise<IUser> => {
+  return api
     .post(`${baseURL}/user/create`, {
       name: name,
       email: email,
@@ -18,19 +18,25 @@ export function createUser({
       picture: picture,
       bio: bio,
     })
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function updateUser({
+export const updateUser = async ({
   id,
   username,
   name,
   birthday,
   picture,
   bio,
-}: IUpdateUser) {
-  api
+}: IUpdateUser): Promise<IUser> => {
+  return api
     .put(`${baseURL}/user/update/${id}`, {
       username: username,
       name: name,
@@ -38,42 +44,83 @@ export function updateUser({
       picture: picture,
       bio: bio,
     })
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function findUserByEmail(email: string) {
-  api
+export const findUserByEmail = async (email: string): Promise<IUser> => {
+  return api
     .get(`${baseURL}/user/find/email/${email}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function findUserById(id: string) {
-  api
+export const findUserById = async (id: string) => {
+  return api
     .get(`${baseURL}/user/find/${id}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function addFollower(id: string, userId: string) {
-  api
+export const addFollower = async (
+  id: string,
+  userId: string
+): Promise<number | string> => {
+  return api
     .post(`${baseURL}/user/followers/${id}/add/${userId}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+    .then((response) => {
+      console.log(response);
+      return response.status;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function removeFollower(id: string, userId: string) {
-  api
+export const removeFollower = async (
+  id: string,
+  userId: string
+): Promise<number | string> => {
+  return api
     .delete(`${baseURL}/user/followers/${id}/remove/${userId}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
+    .then((response) => {
+      console.log(response);
+      return response.status;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
 
-export function totalLikes(id: string) {
-  api
+export const totalLikes = async (id: string): Promise<number | string> => {
+  return api
     .get(`${baseURL}/user/meta/likes/total/${id}`)
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
-}
-
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
