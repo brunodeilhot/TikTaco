@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useViewHeight = () => {
+const useViewHeight = (): number => {
   const [viewheight, setViewHeight] = useState<number>(window.innerHeight);
   const [debouncedState, setDebounced] = useState<boolean>(false);
 

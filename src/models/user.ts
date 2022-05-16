@@ -1,7 +1,7 @@
 import { IRecipeMeta } from "./recipe";
 
 export interface IUpdateUser {
-    id: string;
+    _id: string;
     name?: string;
     username?: string;
     birthday?: number;
@@ -24,7 +24,7 @@ export interface IUserMeta {
   }
 
 export interface IUser {
-    id: string;
+    _id: string;
     email: string;
     name: string;
     username: string;
@@ -40,4 +40,10 @@ export interface IUser {
       followers: IUserMeta[];
       following: IUserMeta[];
     };
+}
+
+export interface IUserPreview {
+  _id: string;
+  picture: string;
+  username: string;
 }

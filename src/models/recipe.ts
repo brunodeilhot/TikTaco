@@ -1,15 +1,11 @@
-import { IUserMeta } from "./user";
+import { IUserMeta, IUserPreview } from "./user";
 
 export interface IRecipePreview {
     _id: string;
     title: string;
     picture: string;
     meta: { totalLikes: number };
-    user: {
-        _id: string;
-        picture: string;
-        username: string;
-    }
+    user: IUserPreview
 }
 
 export interface IRecipe {
@@ -66,7 +62,7 @@ export interface ICreateRecipe {
 }
 
 export interface IUpdateRecipe {
-    id: string;
+    _id: string;
     title?: string;
     picture?: string;
     servings?: number;

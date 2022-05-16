@@ -29,7 +29,7 @@ export const createUser = async ({
 };
 
 export const updateUser = async ({
-  id,
+  _id,
   username,
   name,
   birthday,
@@ -37,7 +37,7 @@ export const updateUser = async ({
   bio,
 }: IUpdateUser): Promise<IUser> => {
   return api
-    .put(`${baseURL}/user/update/${id}`, {
+    .put(`${baseURL}/user/update/${_id}`, {
       username: username,
       name: name,
       birthday: birthday,
@@ -58,11 +58,9 @@ export const findUserByEmail = async (email: string): Promise<IUser> => {
   return api
     .get(`${baseURL}/user/find/email/${email}`)
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };

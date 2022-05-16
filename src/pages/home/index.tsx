@@ -20,9 +20,10 @@ import Loading from "../../components/Loading";
 import services from "../../services";
 import NoFollows from "../../components/NoFollows";
 import { updateUser } from "../../store/userSlice";
+import useUpdateMeta from "../../hooks/useUpdateMeta";
 
 const Home = () => {
-  const { feedRecipes, findUserByEmail } = services;
+  const { feedRecipes } = services;
   const [isLoading, setLoading] = useState(false);
   const viewHeight = useViewHeight();
   const feed = useAppSelector((state) => state.feed.activeFeed);
@@ -35,34 +36,13 @@ const Home = () => {
   const recipes = useAppSelector((state) =>
     feed === 0 ? state.feed.followRecipes : state.feed.discovRecipes
   );
-
   const dispatch = useAppDispatch();
 
   const isLoggedIn = true;
   const userEmail = "maria@fakemail.com";
 
-  useEffect(() => {
-    findUserByEmail(userEmail).then((response) => {
-      if (typeof response === "string") return;
-      dispatch(updateUser(response))
-    })
-  }, [dispatch, findUserByEmail])
-
-  useEffect(() => {
-    setLoading(true);
-
-    feedRecipes().then((response) => {
-      if (typeof response === "string") return;
-      dispatch(discovAddRecipes(response));
-    });
-
-    feedRecipes(10, "626675d1c2ee3c90b785c9e0")
-      .then((response) => {
-        if (typeof response === "string") return;
-        dispatch(followAddRecipes(response));
-      })
-      .finally(() => setLoading(false));
-  }, [dispatch, feedRecipes]);
+  const [toggle, setToggle] = useState(false)
+  useUpdateMeta(userEmail, "626675d1c2ee3c90b785c9e0", toggle);
 
   const changeFeed = (_event: React.SyntheticEvent, newFeed: number) => {
     if (newFeed === 0 && !isLoggedIn) {
@@ -108,7 +88,7 @@ const Home = () => {
         >
           {recipes.map((recipe: IRecipePreview) => (
             <SwiperSlide key={recipe._id}>
-              <Recipe recipe={recipe} />
+              <Recipe recipe={recipe} setToggle={setToggle} />
             </SwiperSlide>
           ))}
         </Swiper>

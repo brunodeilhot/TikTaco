@@ -35,7 +35,7 @@ export const createRecipe = async ({
 };
 
 export const updateRecipe = async ({
-  id,
+  _id,
   title,
   picture,
   servings,
@@ -46,8 +46,8 @@ export const updateRecipe = async ({
   diet,
 }: IUpdateRecipe): Promise<IRecipe> => {
   return api
-    .put(`${baseURL}/recipes/update/${id}`, {
-      id: id,
+    .put(`${baseURL}/recipes/update/${_id}`, {
+      id: _id,
       title: title,
       picture: picture,
       servings: servings,
@@ -121,11 +121,9 @@ export const addLike = async (
   return api
     .post(`${baseURL}/recipes/meta/likes/${id}/add/${userId}`)
     .then((response) => {
-      console.log(response);
       return response.status;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -137,11 +135,9 @@ export const removeLike = async (
   return api
     .delete(`${baseURL}/recipes/meta/likes/${id}/remove/${userId}`)
     .then((response) => {
-      console.log(response);
       return response.status;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
