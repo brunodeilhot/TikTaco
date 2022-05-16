@@ -6,14 +6,18 @@ import {
   SearchRounded,
 } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAppDispatch } from "../hooks";
 import AlertRoundedOutlined from "../icons/AlertRoundedOutlined";
 import HomeRoundedOutlined from "../icons/HomeRoundedOutlined";
 import PersonRoundedOutlined from "../icons/PersonRoundedOutlined";
 import SearchRoundedOutlined from "../icons/SearchRoundedOutlined";
+import { updateDialogStatus } from "../store/loginDialogSlice";
 
 const ActionButtons = () => {
+  const dispatch = useAppDispatch();
+  const isLoggedIn = false;
   const iconColor = "#FAFAFA";
   const actionBtList = [
     {
@@ -69,7 +73,8 @@ const ActionButtons = () => {
   }, [path]);
 
   const handlePathChange = (_e: React.SyntheticEvent, value: string) => {
-    setActive(value);
+    if (!isLoggedIn && value !== "/") dispatch(updateDialogStatus(true))
+    if(isLoggedIn) setActive(value);
   };
 
   return (
@@ -87,7 +92,7 @@ const ActionButtons = () => {
             key={button.name}
             icon={active === button.link ? button.iconSelected : button.icon}
             component={Link}
-            to={button.link}
+            to={!isLoggedIn ? "/" : button.link}
             value={button.link}
             sx={{
               "&.Mui-selected": { paddingTop: 0 },

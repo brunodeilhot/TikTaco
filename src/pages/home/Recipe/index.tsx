@@ -1,20 +1,39 @@
 import { Avatar, Grid, IconButton, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import FavoriteBorder from "../../../icons/FavoriteBorder";
 import LikeBorder from "../../../icons/LikeBorder";
 import ProfileFollow from "../../../icons/ProfileFollow";
 import { IRecipePreview } from "../../../models/recipe";
+import RecipeDetails from "../../../components/RecipeDetails";
+import { FavoriteRounded } from "@mui/icons-material";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 
 interface Props {
   recipe: IRecipePreview;
 }
 
 const Recipe: React.FC<Props> = ({ recipe }) => {
-  const imagePath = "http://192.168.1.4:3000/images/recipes/feed";
-  const AvatarImg = "http://192.168.1.4:3000/images/users/avatar-pic.png";
-  const { _id, title, picture, meta } = recipe;
+  const imagePath = "http://192.168.1.5:3000/images/recipes";
+  const avatarPath = "http://192.168.1.5:3000/images/users";
+  const dispatch = useAppDispatch();
+  const userState = useAppSelector((state) => state.user);
+
+  const recipesLiked = userState.user.meta.rec_liked;
+  const { _id, title, picture, meta, user } = recipe;
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleClickAvatar = () => {
+    console.log(userState)
+    console.log(recipesLiked)
     console.log("avatar");
   };
 
@@ -52,8 +71,7 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
           paddingLeft={4}
           justifyContent="flex-end"
           height="100%"
-          component={Link}
-          to={`/recipe/${_id}`}
+          onClick={handleOpen}
           sx={{ textDecoration: "none" }}
         >
           <Typography
@@ -68,8 +86,8 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
             {title}
           </Typography>
           <Typography
-          pt={2}
-          mb={0}
+            pt={2}
+            mb={0}
             paragraph
             textTransform="uppercase"
             fontWeight={700}
@@ -94,18 +112,12 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
           justifyContent="flex-end"
           height="100%"
         >
-          <Grid
-            item
-            width="100%"
-            height="100%"
-            component={Link}
-            to={`/recipe/${_id}`}
-          ></Grid>
+          <Grid item width="100%" height="100%" onClick={handleOpen}></Grid>
           <Grid item position="relative" mb={2}>
             <IconButton onClick={handleClickAvatar}>
               <Avatar
-                alt="Maria Chang"
-                src={AvatarImg}
+                alt={user.username}
+                src={`${avatarPath}/${user.picture}`}
                 sx={{ width: 66, height: 66, border: "3px solid #FFF" }}
               />
             </IconButton>
@@ -118,7 +130,12 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
           </Grid>
 
           <IconButton sx={{ position: "relative", paddingBottom: 2.5 }}>
-            <LikeBorder sx={{ fontSize: 40 }} />
+            {recipesLiked.findIndex((r) => r.recipe === _id) === -1 ? (
+              <FavoriteRounded sx={{ fontSize: 40, color: "#FAFAFA" }} />
+            ) : (
+              <LikeBorder sx={{ fontSize: 40 }} />
+            )}
+
             <Typography
               variant="body2"
               component="span"
@@ -130,7 +147,7 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
                 textShadow: "0px 3px 3px rgba(0, 0, 0, 0.25)",
               }}
             >
-              {meta.likes}
+              {meta.totalLikes}
             </Typography>
           </IconButton>
           <IconButton>
@@ -138,6 +155,7 @@ const Recipe: React.FC<Props> = ({ recipe }) => {
           </IconButton>
         </Grid>
       </Grid>
+      <RecipeDetails open={open} handleClose={handleClose} />
     </Grid>
   );
 };

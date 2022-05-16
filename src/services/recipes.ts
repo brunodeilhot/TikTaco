@@ -1,4 +1,4 @@
-import { ICreateRecipe, IRecipe, IUpdateRecipe } from "../models/recipe";
+import { ICreateRecipe, IRecipe, IRecipePreview, IUpdateRecipe } from "../models/recipe";
 import { api, baseURL } from "./index";
 
 export const createRecipe = async ({
@@ -101,12 +101,11 @@ export const findRecipeByUser = async (
 
 export const feedRecipes = async (
   limit: number = 10,
-  user: string | null = null
-): Promise<IRecipe[]> => {
+  user: string = "",
+): Promise<IRecipePreview[] | string> => {
   return api
     .get(`/recipes/feed/${limit}/${user}`)
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
@@ -178,3 +177,8 @@ export const removeStar = async (
       return error.message;
     });
 };
+
+const methods = {
+  feedRecipes
+}
+export default methods;

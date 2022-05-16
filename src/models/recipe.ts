@@ -4,7 +4,12 @@ export interface IRecipePreview {
     _id: string;
     title: string;
     picture: string;
-    meta: { likes: string[] }
+    meta: { totalLikes: number };
+    user: {
+        _id: string;
+        picture: string;
+        username: string;
+    }
 }
 
 export interface IRecipe {

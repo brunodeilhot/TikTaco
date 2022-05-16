@@ -12,10 +12,18 @@ import {
   updateDiscovActRec,
   followAddRecipes,
   updateActiveFeed,
+  discovAddRecipes,
 } from "../../store/feedSlice";
 import FeedTabs from "../../components/FeedTabs";
+import { updateDialogStatus } from "../../store/loginDialogSlice";
+import Loading from "../../components/Loading";
+import services from "../../services";
+import NoFollows from "../../components/NoFollows";
+import { updateUser } from "../../store/userSlice";
 
 const Home = () => {
+  const { feedRecipes, findUserByEmail } = services;
+  const [isLoading, setLoading] = useState(false);
   const viewHeight = useViewHeight();
   const feed = useAppSelector((state) => state.feed.activeFeed);
   const followActiveRecipe = useAppSelector(
@@ -30,96 +38,81 @@ const Home = () => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(
-      followAddRecipes([
-        {
-          _id: "1",
-          title: "Recipe 1",
-          picture: "123456.png",
-          meta: { likes: ["50"] },
-        },
-        {
-          _id: "2",
-          title: "Recipe 2",
-          picture: "22222.png",
-          meta: { likes: ["88"] },
-        },
-        {
-          _id: "3",
-          title: "Recipe 3",
-          picture: "123456.png",
-          meta: { likes: ["50"] },
-        },
-        {
-          _id: "4",
-          title: "Recipe 4",
-          picture: "22222.png",
-          meta: { likes: ["88"] },
-        },
-        {
-          _id: "5",
-          title: "Recipe 5",
-          picture: "123456.png",
-          meta: { likes: ["50"] },
-        },
-        {
-          _id: "6",
-          title: "Recipe 6",
-          picture: "22222.png",
-          meta: { likes: ["88"] },
-        },
-        {
-          _id: "7",
-          title: "Recipe 7",
-          picture: "123456.png",
-          meta: { likes: ["50"] },
-        },
-        {
-          _id: "8",
-          title: "Recipe 8",
-          picture: "22222.png",
-          meta: { likes: ["88"] },
-        },
-      ])
-    );
-  }, [dispatch]);
+  const isLoggedIn = true;
+  const userEmail = "maria@fakemail.com";
 
-  // useEffect(() => {
-  //   console.log(recipes);
-  // }, [recipes]);
+  useEffect(() => {
+    findUserByEmail(userEmail).then((response) => {
+      if (typeof response === "string") return;
+      dispatch(updateUser(response))
+    })
+  }, [dispatch, findUserByEmail])
+
+  useEffect(() => {
+    setLoading(true);
+
+    feedRecipes().then((response) => {
+      if (typeof response === "string") return;
+      dispatch(discovAddRecipes(response));
+    });
+
+    feedRecipes(10, "626675d1c2ee3c90b785c9e0")
+      .then((response) => {
+        if (typeof response === "string") return;
+        dispatch(followAddRecipes(response));
+      })
+      .finally(() => setLoading(false));
+  }, [dispatch, feedRecipes]);
 
   const changeFeed = (_event: React.SyntheticEvent, newFeed: number) => {
+    if (newFeed === 0 && !isLoggedIn) {
+      dispatch(updateDialogStatus(true));
+      return;
+    }
     dispatch(updateActiveFeed(newFeed));
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <Grid container>
       <FeedTabs feed={feed} changeFeed={changeFeed} />
 
-      <Swiper
-        style={{ width: "100%" }}
-        height={viewHeight}
-        modules={[Keyboard]}
-        direction={"vertical"}
-        keyboard={{
-          enabled: true,
-        }}
-        onActiveIndexChange={(swiper) =>
-          dispatch(
+      {recipes.length === 0 && feed === 0 && <NoFollows />}
+
+      {recipes.length > 0 && (
+        <Swiper
+          style={{ width: "100%" }}
+          height={viewHeight}
+          modules={[Keyboard]}
+          direction={"vertical"}
+          keyboard={{
+            enabled: true,
+          }}
+          onRealIndexChange={(swiper) => {
+            setTimeout(() => {
+              dispatch(
+                feed === 0
+                  ? updateFollowActRec(swiper.activeIndex)
+                  : updateDiscovActRec(swiper.activeIndex)
+              );
+            }, 100);
+          }}
+          initialSlide={feed === 0 ? followActiveRecipe : discovActiveRecipe}
+          observer
+          onObserverUpdate={(swiper) => {
             feed === 0
-              ? updateFollowActRec(swiper.activeIndex)
-              : updateDiscovActRec(swiper.activeIndex)
-          )
-        }
-        initialSlide={feed === 0 ? followActiveRecipe : discovActiveRecipe}
-      >
-        {recipes.map((recipe: IRecipePreview) => (
-          <SwiperSlide key={recipe._id}>
-            <Recipe recipe={recipe} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+              ? swiper.slideTo(followActiveRecipe, 0, true)
+              : swiper.slideTo(discovActiveRecipe, 0, true);
+          }}
+        >
+          {recipes.map((recipe: IRecipePreview) => (
+            <SwiperSlide key={recipe._id}>
+              <Recipe recipe={recipe} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
 
       <ActionButtons />
     </Grid>

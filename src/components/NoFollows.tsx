@@ -1,8 +1,8 @@
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import useViewHeight from "../hooks/useViewHeight";
-import Logo from "../assets/Logo.svg";
+import Logo from "../assets/SadLogo.svg";
 
-const Loading: React.FC = () => {
+const NoFollows: React.FC = () => {
   const viewHeight = useViewHeight();
 
   return (
@@ -13,6 +13,8 @@ const Loading: React.FC = () => {
       flexDirection="column"
       flexWrap="nowrap"
       height={viewHeight}
+      marginLeft={2}
+      marginRight={2}
       sx={{ backgroundColor: "background.default" }}
     >
       <Grid item>
@@ -22,16 +24,17 @@ const Loading: React.FC = () => {
           height={106}
           src={Logo}
           alt="Large whatsinmypantry smiling taco logo"
+          mb={5}
         />
       </Grid>
       <Grid item>
-        <Typography variant="h1">TikTaco</Typography>
+        <Typography variant="h4" textAlign="center">You are not following anyone.</Typography>
       </Grid>
-      <Grid item mt={10}>
-        <CircularProgress size={150} color="primary" />
+      <Grid item>
+        <Typography variant="h5" textAlign="center">Follow someone to see only their content!</Typography>
       </Grid>
     </Grid>
   );
 };
 
-export default Loading;
+export default NoFollows;

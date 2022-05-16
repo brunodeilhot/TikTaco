@@ -28,10 +28,10 @@ export interface IUser {
     email: string;
     name: string;
     username: string;
-    birthday: number;
+    birthday: Date | number;
     picture: string;
     bio: string;
-    created_at: Date;
+    created_at: Date | number;
     privateProfile: boolean;
     PrivateLikes: boolean;
     meta: {

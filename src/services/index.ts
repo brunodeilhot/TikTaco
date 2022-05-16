@@ -20,7 +20,7 @@ import {
   totalLikes,
 } from "./user";
 
-export const baseURL = "http://localhost:8000";
+export const baseURL = "http://192.168.1.5:8000";
 
 export const api = axios.create({
   baseURL,

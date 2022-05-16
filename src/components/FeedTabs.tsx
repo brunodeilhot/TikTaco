@@ -29,7 +29,7 @@ const TopTab = styled(Tab)(({ theme }) => ({
 const FeedTabs: React.FC<Props> = ({ feed, changeFeed }) => {
   return (
     <TopTabs centered value={feed} onChange={changeFeed}>
-      <TopTab label="following" sx={{  }} />
+      <TopTab label="following" />
       <TopTab label="discover" />
     </TopTabs>
   );
