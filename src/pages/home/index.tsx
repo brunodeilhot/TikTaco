@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard } from "swiper";
 import ActionButtons from "../../components/ActionButtons";
@@ -10,21 +10,17 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   updateFollowActRec,
   updateDiscovActRec,
-  followAddRecipes,
   updateActiveFeed,
-  discovAddRecipes,
 } from "../../store/feedSlice";
 import FeedTabs from "../../components/FeedTabs";
 import { updateDialogStatus } from "../../store/loginDialogSlice";
 import Loading from "../../components/Loading";
-import services from "../../services";
 import NoFollows from "../../components/NoFollows";
-import { updateUser } from "../../store/userSlice";
 import useUpdateMeta from "../../hooks/useUpdateMeta";
+import useLoading from "../../hooks/useLoading";
 
 const Home = () => {
-  const { feedRecipes } = services;
-  const [isLoading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
   const viewHeight = useViewHeight();
   const feed = useAppSelector((state) => state.feed.activeFeed);
   const followActiveRecipe = useAppSelector(
@@ -36,12 +32,13 @@ const Home = () => {
   const recipes = useAppSelector((state) =>
     feed === 0 ? state.feed.followRecipes : state.feed.discovRecipes
   );
-  const dispatch = useAppDispatch();
+
+  const isLoading = useLoading(recipes.length);
 
   const isLoggedIn = true;
   const userEmail = "maria@fakemail.com";
 
-  const [toggle, setToggle] = useState(false)
+  const [toggle, setToggle] = useState(false);
   useUpdateMeta(userEmail, "626675d1c2ee3c90b785c9e0", toggle);
 
   const changeFeed = (_event: React.SyntheticEvent, newFeed: number) => {

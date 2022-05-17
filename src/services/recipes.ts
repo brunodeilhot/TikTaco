@@ -149,11 +149,9 @@ export const addStar = async (
   return api
     .post(`${baseURL}/user/meta/stars/${userId}/add/${recipeId}`)
     .then((response) => {
-      console.log(response);
       return response.status;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -165,11 +163,9 @@ export const removeStar = async (
   return api
     .delete(`${baseURL}/user/meta/stars/${userId}/remove/${recipeId}`)
     .then((response) => {
-      console.log(response);
       return response.status;
     })
     .catch((error) => {
-      console.error(error.message);
       return error.message;
     });
 };

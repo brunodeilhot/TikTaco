@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAppDispatch } from ".";
+import { useAppDispatch } from "./index";
 import services from "../services";
 import { discovAddRecipes, followAddRecipes } from "../store/feedSlice";
 import { updateUser } from "../store/userSlice";
