@@ -6,7 +6,10 @@ interface Props {
   picture: string;
 }
 
-const Header: React.FC<Props> = ({ handleTransition, picture }) => (
+const Header: React.FC<Props> = ({ handleTransition, picture }) => {
+  const imagePath = "http://192.168.1.5:3000/images/recipes";
+  
+  return (
   <Grid
     container
     item
@@ -17,7 +20,7 @@ const Header: React.FC<Props> = ({ handleTransition, picture }) => (
     borderBottom="5px solid"
     borderColor="primary.main"
     sx={{
-      background: `url(${picture}) no-repeat`,
+      background: `url(${imagePath}/${picture}) no-repeat`,
       backgroundSize: "cover",
       backgroundPosition: "center",
     }}
@@ -30,6 +33,6 @@ const Header: React.FC<Props> = ({ handleTransition, picture }) => (
       <CloseRounded color="primary" sx={{ fontSize: 40 }} />
     </Fab>
   </Grid>
-);
+)};
 
 export default Header;

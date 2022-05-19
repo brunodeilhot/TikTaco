@@ -1,4 +1,8 @@
-import { AccessTimeRounded, FavoriteBorderRounded } from "@mui/icons-material";
+import {
+  AccessTimeRounded,
+  FavoriteBorderRounded,
+  RestaurantRounded,
+} from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
 
 interface Props {
@@ -17,10 +21,8 @@ const Info: React.FC<Props> = ({ time, servings }) => {
     {
       id: 2,
       text: `${servings} SERVINGS`,
-      color: "#E06E9C",
-      icon: (
-        <FavoriteBorderRounded fontSize="large" sx={{ color: "#E06E9C" }} />
-      ),
+      color: "primary.main",
+      icon: <RestaurantRounded color="primary"  sx={{ fontSize: 28 }} />,
     },
   ];
 

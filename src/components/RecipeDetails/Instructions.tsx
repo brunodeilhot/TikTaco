@@ -12,8 +12,8 @@ const Instructions: React.FC<Props> = ({ steps }) => {
       <Typography variant="h4" component="h2" color="primary" fontWeight={700}>
         Instructions
       </Typography>
-      {steps.map((step, index) => (
-        <List dense>
+      <List dense>
+        {steps.map((step, index) => (
           <ListItem key={index} disablePadding>
             <ListItemText
               primary={
@@ -27,8 +27,8 @@ const Instructions: React.FC<Props> = ({ steps }) => {
               }
             />
           </ListItem>
-        </List>
-      ))}
+        ))}
+      </List>
       <Grid container item direction="column" alignItems="center" pt={3.5}>
         <Box
           component="img"

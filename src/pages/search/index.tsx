@@ -1,12 +1,11 @@
 import { Grid } from "@mui/material";
 import ActionButtons from "../../components/ActionButtons";
-import Header from "./header";
 
-const Profile = () => (
-  <Grid container>
-    <Header />
+const Search = () => (
+  <Grid>
+    <div>Search Page</div>
     <ActionButtons />
   </Grid>
 );
 
-export default Profile;
+export default Search;

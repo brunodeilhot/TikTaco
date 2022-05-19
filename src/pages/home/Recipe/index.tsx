@@ -2,11 +2,10 @@ import { Grid } from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 import { IRecipePreview } from "../../../models/recipe";
 import RecipeDetails from "../../../components/RecipeDetails";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { useAppSelector } from "../../../hooks";
 import services from "../../../services";
 import Title from "./Title";
 import MetaContainer from "./MetaContainer";
-import useUpdateMeta from "../../../hooks/useUpdateMeta";
 
 interface Props {
   recipe: IRecipePreview;
@@ -16,7 +15,6 @@ interface Props {
 const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
   const imagePath = "http://192.168.1.5:3000/images/recipes";
   const avatarPath = "http://192.168.1.5:3000/images/users";
-  const dispatch = useAppDispatch();
   const userState = useAppSelector((state) => state.user);
   const {
     addLike,
@@ -31,9 +29,7 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
   const usersFollowed = userState.user.meta.following;
   const { _id, title, picture, meta, user } = recipe;
 
-  const userEmail = "maria@fakemail.com";
-
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -128,7 +124,7 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
           activeUser={userState.user._id}
         />
       </Grid>
-      <RecipeDetails open={open} handleClose={handleClose} />
+      <RecipeDetails open={open} handleClose={handleClose} recipeId={_id}/>
     </Grid>
   );
 };

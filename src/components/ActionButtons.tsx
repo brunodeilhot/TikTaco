@@ -17,7 +17,7 @@ import { updateDialogStatus } from "../store/loginDialogSlice";
 
 const ActionButtons = () => {
   const dispatch = useAppDispatch();
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   const iconColor = "#FAFAFA";
   const actionBtList = [
     {

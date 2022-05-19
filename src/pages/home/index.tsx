@@ -49,7 +49,7 @@ const Home = () => {
     dispatch(updateActiveFeed(newFeed));
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading && feed === 1) return <Loading />;
 
   return (
     <Grid container>
