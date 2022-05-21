@@ -34,16 +34,18 @@ export interface IUser {
     created_at: Date | number;
     privateProfile: boolean;
     PrivateLikes: boolean;
-    meta: {
-      rec_liked: IRecipeMeta[];
-      rec_starred: IRecipeMeta[];
-      followers: IUserMeta[];
-      following: IUserMeta[];
-    };
+    meta: IMeta;
 }
 
 export interface IUserPreview {
   _id: string;
   picture: string;
   username: string;
+}
+
+export interface IMeta {
+  rec_liked: IRecipeMeta[];
+  rec_starred: IRecipeMeta[];
+  followers: IUserMeta[];
+  following: IUserMeta[];
 }

@@ -5,8 +5,13 @@ import {
   PersonRounded,
   SearchRounded,
 } from "@mui/icons-material";
-import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
-import { MouseEventHandler, useEffect, useState } from "react";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Paper,
+  Toolbar,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAppDispatch } from "../hooks";
 import AlertRoundedOutlined from "../icons/AlertRoundedOutlined";
@@ -14,6 +19,7 @@ import HomeRoundedOutlined from "../icons/HomeRoundedOutlined";
 import PersonRoundedOutlined from "../icons/PersonRoundedOutlined";
 import SearchRoundedOutlined from "../icons/SearchRoundedOutlined";
 import { updateDialogStatus } from "../store/loginDialogSlice";
+import CreateRecipe from "./CreateRecipe";
 
 const ActionButtons = () => {
   const dispatch = useAppDispatch();
@@ -73,36 +79,66 @@ const ActionButtons = () => {
   }, [path]);
 
   const handlePathChange = (_e: React.SyntheticEvent, value: string) => {
-    if (!isLoggedIn && value !== "/") dispatch(updateDialogStatus(true))
-    if(isLoggedIn) setActive(value);
+    if (!isLoggedIn && value !== "/") dispatch(updateDialogStatus(true));
+    if (isLoggedIn) setActive(value);
+  };
+
+  /**
+   * State and handle functions responsible for the create recipe modal
+   */
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleCreate = () => {
+    setOpen((prevState) => !prevState);
   };
 
   return (
-    <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-      elevation={3}
-    >
-      <BottomNavigation
-        value={active}
-        onChange={handlePathChange}
-        sx={{ backgroundColor: "secondary.main" }}
+    <>
+      <Paper
+        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+        elevation={3}
       >
-        {actionBtList.map((button) => (
-          <BottomNavigationAction
-            key={button.name}
-            icon={active === button.link ? button.iconSelected : button.icon}
-            component={Link}
-            to={!isLoggedIn ? "/" : button.link}
-            value={button.link}
-            sx={{
-              "&.Mui-selected": { paddingTop: 0 },
-              padding: 0,
-              minWidth: (100 / actionBtList.length).toString() + "%",
-            }}
-          />
-        ))}
-      </BottomNavigation>
-    </Paper>
+        <BottomNavigation
+          value={active}
+          onChange={handlePathChange}
+          sx={{ backgroundColor: "secondary.main" }}
+        >
+          {actionBtList.map((button) =>
+            button.link !== "/create" ? (
+              <BottomNavigationAction
+                key={button.name}
+                icon={
+                  active === button.link ? button.iconSelected : button.icon
+                }
+                component={Link}
+                to={!isLoggedIn ? "/" : button.link}
+                value={button.link}
+                sx={{
+                  "&.Mui-selected": { paddingTop: 0 },
+                  padding: 0,
+                  minWidth: (100 / actionBtList.length).toString() + "%",
+                }}
+              />
+            ) : (
+              <BottomNavigationAction
+                key={button.name}
+                icon={
+                  active === button.link ? button.iconSelected : button.icon
+                }
+                value={button.link}
+                onClick={handleCreate}
+                sx={{
+                  "&.Mui-selected": { paddingTop: 0 },
+                  padding: 0,
+                  minWidth: (100 / actionBtList.length).toString() + "%",
+                }}
+              />
+            )
+          )}
+        </BottomNavigation>
+      </Paper>
+      <CreateRecipe handleCreate={handleCreate} open={open} />
+    </>
   );
 };
 

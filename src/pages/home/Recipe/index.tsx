@@ -6,6 +6,7 @@ import { useAppSelector } from "../../../hooks";
 import services from "../../../services";
 import Title from "./Title";
 import MetaContainer from "./MetaContainer";
+import { avatarPath, imagePath } from '../../../env'
 
 interface Props {
   recipe: IRecipePreview;
@@ -13,8 +14,6 @@ interface Props {
 }
 
 const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
-  const imagePath = "http://192.168.1.5:3000/images/recipes";
-  const avatarPath = "http://192.168.1.5:3000/images/users";
   const userState = useAppSelector((state) => state.user);
   const {
     addLike,
@@ -124,7 +123,7 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
           activeUser={userState.user._id}
         />
       </Grid>
-      <RecipeDetails open={open} handleClose={handleClose} recipeId={_id}/>
+      <RecipeDetails open={open} handleClose={handleClose} recipeId={_id} />
     </Grid>
   );
 };

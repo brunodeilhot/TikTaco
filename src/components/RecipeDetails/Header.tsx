@@ -21,6 +21,7 @@ const Header: React.FC<Props> = ({ handleTransition, picture }) => {
     borderColor="primary.main"
     sx={{
       background: `url(${imagePath}/${picture}) no-repeat`,
+      backgroundColor: "background.default",
       backgroundSize: "cover",
       backgroundPosition: "center",
     }}

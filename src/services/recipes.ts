@@ -1,4 +1,9 @@
-import { ICreateRecipe, IRecipe, IRecipePreview, IUpdateRecipe } from "../models/recipe";
+import {
+  ICreateRecipe,
+  IRecipe,
+  IRecipePreview,
+  IUpdateRecipe,
+} from "../models/recipe";
 import { api, baseURL } from "./index";
 
 export const createRecipe = async ({
@@ -99,9 +104,26 @@ export const findRecipeByUser = async (
     });
 };
 
+export const findRecipeByUserMeta = async (
+  userId: string,
+  meta: string,
+  limit: number = 10
+): Promise<IRecipe[]> => {
+  return api
+    .get(`${baseURL}/recipes/find/user/${userId}/meta/${meta}/${limit}`)
+    .then((response) => {
+      console.log(response);
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      return error.message;
+    });
+};
+
 export const feedRecipes = async (
   limit: number = 10,
-  user: string = "",
+  user: string = ""
 ): Promise<IRecipePreview[] | string> => {
   return api
     .get(`/recipes/feed/${limit}/${user}`)
@@ -169,8 +191,3 @@ export const removeStar = async (
       return error.message;
     });
 };
-
-const methods = {
-  feedRecipes
-}
-export default methods;
