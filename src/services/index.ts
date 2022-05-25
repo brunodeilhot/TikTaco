@@ -9,7 +9,8 @@ import {
   removeLike,
   addStar,
   removeStar,
-  findRecipeByUserMeta
+  findRecipeByUserMeta,
+  uploadRecipeImage
 } from "./recipes";
 import {
   createUser,
@@ -48,7 +49,8 @@ const services = {
   addFollower,
   removeFollower,
   totalLikes,
-  findRecipeByUserMeta
+  findRecipeByUserMeta,
+  uploadRecipeImage
 };
 
 export default services;

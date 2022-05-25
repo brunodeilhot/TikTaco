@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-const useViewHeight = (): number => {
-  const [viewheight, setViewHeight] = useState<number>(window.innerHeight);
+const useViewHeight = (): { viewHeight: number } => {
+  const [viewHeight, setViewHeight] = useState<number>(window.innerHeight);
   const [debouncedState, setDebounced] = useState<boolean>(false);
 
   const handleResize = () => {
@@ -24,7 +24,7 @@ const useViewHeight = (): number => {
     };
   }, []);
 
-  return viewheight;
+  return { viewHeight };
 };
 
 export default useViewHeight;

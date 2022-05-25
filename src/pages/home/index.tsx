@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard } from "swiper";
+import { Keyboard, Mousewheel } from "swiper";
 import ActionButtons from "../../components/ActionButtons";
 import useViewHeight from "../../hooks/useViewHeight";
 import { IRecipePreview } from "../../models/recipe";
@@ -21,7 +21,7 @@ import useLoading from "../../hooks/useLoading";
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const viewHeight = useViewHeight();
+  const { viewHeight } = useViewHeight();
   const feed = useAppSelector((state) => state.feed.activeFeed);
   const followActiveRecipe = useAppSelector(
     (state) => state.feed.followActiveRecipe
@@ -61,11 +61,10 @@ const Home = () => {
         <Swiper
           style={{ width: "100%" }}
           height={viewHeight}
-          modules={[Keyboard]}
+          modules={[Keyboard, Mousewheel]}
           direction={"vertical"}
-          keyboard={{
-            enabled: true,
-          }}
+          keyboard
+          mousewheel
           onRealIndexChange={(swiper) => {
             setTimeout(() => {
               dispatch(
@@ -90,7 +89,6 @@ const Home = () => {
           ))}
         </Swiper>
       )}
-
       <ActionButtons />
     </Grid>
   );

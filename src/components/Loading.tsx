@@ -3,7 +3,7 @@ import useViewHeight from "../hooks/useViewHeight";
 import Logo from "../assets/Logo.svg";
 
 const Loading: React.FC = () => {
-  const viewHeight = useViewHeight();
+  const { viewHeight } = useViewHeight();
 
   return (
     <Grid

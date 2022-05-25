@@ -3,9 +3,7 @@ import { Outlet } from "react-router-dom";
 import LoginDialog from "./components/LoginDialog";
 import { responsiveDarkTheme, responsiveLightTheme } from "./Theme";
 
-
 const App = () => {
-
   return (
     <ThemeProvider theme={responsiveDarkTheme}>
       <CssBaseline />

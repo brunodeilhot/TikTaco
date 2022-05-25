@@ -3,6 +3,7 @@ import { useState } from "react";
 import ActionButtons from "../../components/ActionButtons";
 import RecipeDetails from "../../components/RecipeDetails";
 import { useAppSelector } from "../../hooks";
+import EditProfile from "./EditProfile";
 import Header from "./Header";
 import Meta from "./Meta";
 import ProfileFeedTab from "./ProfileFeedTab";
@@ -35,6 +36,14 @@ const Profile: React.FC = () => {
     setOpen(false);
   };
 
+  /**
+   * State and handle function responsible for the edit profile drawer
+   */
+
+  const [editProfile, setEditProfile] = useState<boolean>(false);
+
+  const returnToProfile = () => setEditProfile(!editProfile);
+
   return (
     <Grid container flexDirection="column" flexWrap="nowrap">
       <Header
@@ -45,6 +54,7 @@ const Profile: React.FC = () => {
       <Meta user={user._id} meta={user.meta} />
       <Grid item alignSelf="center">
         <Button
+        onClick={returnToProfile}
           variant="outlined"
           sx={{ borderRadius: 10, textTransform: "uppercase", fontSize: 10 }}
         >
@@ -67,6 +77,7 @@ const Profile: React.FC = () => {
           recipeId={recipeId}
         />
       )}
+      <EditProfile returnToProfile={returnToProfile} editProfile={editProfile} user={user} />
       <Toolbar />
       <ActionButtons />
     </Grid>

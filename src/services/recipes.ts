@@ -191,3 +191,18 @@ export const removeStar = async (
       return error.message;
     });
 };
+
+export const uploadRecipeImage = async (file: any): Promise<number> => {
+  return api
+    .post(`${baseURL}/uploads/recipes`, file, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      return response.status;
+    })
+    .catch((error) => {
+      return error.message;
+    });
+};

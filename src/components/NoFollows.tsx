@@ -3,7 +3,7 @@ import useViewHeight from "../hooks/useViewHeight";
 import Logo from "../assets/SadLogo.svg";
 
 const NoFollows: React.FC = () => {
-  const viewHeight = useViewHeight();
+  const { viewHeight } = useViewHeight();
 
   return (
     <Grid
@@ -28,10 +28,14 @@ const NoFollows: React.FC = () => {
         />
       </Grid>
       <Grid item>
-        <Typography variant="h4" textAlign="center">You are not following anyone.</Typography>
+        <Typography variant="h4" textAlign="center">
+          You are not following anyone.
+        </Typography>
       </Grid>
       <Grid item>
-        <Typography variant="h5" textAlign="center">Follow someone to see only their content!</Typography>
+        <Typography variant="h5" textAlign="center">
+          Follow someone to see only their content!
+        </Typography>
       </Grid>
     </Grid>
   );
