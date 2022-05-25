@@ -122,3 +122,18 @@ export const totalLikes = async (id: string): Promise<number | string> => {
       return error.message;
     });
 };
+
+export const uploadUserImage = async (file: any): Promise<number> => {
+  return api
+    .post(`${baseURL}/uploads/users`, file, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      return response.status;
+    })
+    .catch((error) => {
+      return error.message;
+    });
+};

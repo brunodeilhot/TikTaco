@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "./index";
 import services from "../services";
 import { discovAddRecipes, followAddRecipes } from "../store/feedSlice";
-import { updateUser } from "../store/userSlice";
+import { updateStoredUser } from "../store/userSlice";
 
 const useUpdateMeta= (userEmail: string, userId: string, toggle?: boolean): void => {
   const dispatch = useAppDispatch();
@@ -11,7 +11,7 @@ const useUpdateMeta= (userEmail: string, userId: string, toggle?: boolean): void
   useEffect(() => {
     findUserByEmail(userEmail).then((response) => {
       if (typeof response === "string") return;
-      dispatch(updateUser(response));
+      dispatch(updateStoredUser(response));
     });
   }, [dispatch, findUserByEmail, userEmail, toggle]);
 

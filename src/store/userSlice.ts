@@ -31,14 +31,14 @@ export const UserSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    updateUser: (state: UserState, action: PayloadAction<IUser>) => {
+    updateStoredUser: (state: UserState, action: PayloadAction<IUser>) => {
       state.user = action.payload;
     }
   },
 });
 
 export const {
-  updateUser
+  updateStoredUser
 } = UserSlice.actions;
 
 export default UserSlice.reducer;

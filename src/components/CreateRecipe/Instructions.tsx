@@ -91,6 +91,7 @@ const Instructions: React.FC<Props> = () => {
                       </Grid>
                       <Grid container item xs={9} pr={2}>
                         <CustomTextField
+                          multiline
                           name={`steps.${index}.step`}
                           label={`Step ${index + 1}`}
                           error={

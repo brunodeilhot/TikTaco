@@ -7,16 +7,12 @@ import CustomTextField from "./CustomTextField";
 import Ingredients from "./Ingredients";
 import Instructions from "./Instructions";
 import DietOptions from "./DietOptions";
-import { Ingredient } from "../../models/recipe";
 import services from "../../services";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
-import { schema } from "../../models/form";
 import Loading from "../Loading";
-
-interface Step {
-  step: string;
-}
+import { schema } from "../../models/recipeForm";
+import { Ingredient } from "../../models/recipe";
 
 type FormData = {
   title: string;
@@ -27,6 +23,10 @@ type FormData = {
   picture: FileList;
   diet: string[];
 };
+
+export interface Step {
+  step: string;
+}
 
 const CreateRecipe: React.FC = () => {
   const { createRecipe, uploadRecipeImage } = services;

@@ -20,6 +20,7 @@ import {
   addFollower,
   removeFollower,
   totalLikes,
+  uploadUserImage
 } from "./user";
 
 export const baseURL = "http://192.168.1.5:8000";
@@ -50,7 +51,8 @@ const services = {
   removeFollower,
   totalLikes,
   findRecipeByUserMeta,
-  uploadRecipeImage
+  uploadRecipeImage,
+  uploadUserImage
 };
 
 export default services;
