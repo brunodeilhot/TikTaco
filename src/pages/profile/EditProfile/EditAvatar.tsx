@@ -1,7 +1,6 @@
 import { Avatar, Grid, IconButton, Input, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { avatarPath, placeholder } from "../../../env";
 
 interface Props {
   picture?: string;
@@ -15,7 +14,9 @@ const EditAvatar: React.FC<Props> = ({ picture }) => {
   } = useFormContext();
   const tempPicture = watch("picture") ?? [];
   const [currentPicture, setPicture] = useState<string>(
-    picture ? `${avatarPath}/${picture}` : `${avatarPath}/${placeholder}`
+    picture
+      ? `${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${picture}`
+      : `${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${process.env.REACT_APP_IMAGE_PLACEHOLDER}`
   );
 
   const changePicture = tempPicture[0];

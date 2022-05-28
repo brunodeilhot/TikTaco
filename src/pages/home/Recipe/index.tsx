@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "../../../hooks";
 import services from "../../../services";
 import Title from "./Title";
 import MetaContainer from "./MetaContainer";
-import { avatarPath, imagePath } from "../../../env";
 import useAuth from "../../../hooks/useAuth";
 import { updateDialogStatus } from "../../../store/loginDialogSlice";
 
@@ -104,7 +103,7 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
       flexDirection="column"
       justifyContent="flex-end"
       sx={{
-        background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 100%), url(${imagePath}/${picture})`,
+        background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 100%), url(${process.env.REACT_APP_RECIPE_IMAGE_PATH}/${picture})`,
         backgroundColor: "background.default",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
@@ -124,7 +123,7 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
           toggleFollow={toggleFollow}
           recipeId={_id}
           user={user}
-          avatarPath={avatarPath}
+          avatarPath={process.env.REACT_APP_AVATAR_IMAGE_PATH}
           recipesLiked={recipesLiked}
           totalLikes={meta.totalLikes}
           toggleLike={toggleLike}

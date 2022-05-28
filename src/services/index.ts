@@ -10,7 +10,7 @@ import {
   addStar,
   removeStar,
   findRecipeByUserMeta,
-  uploadRecipeImage
+  uploadRecipeImage,
 } from "./recipes";
 import {
   createUser,
@@ -20,10 +20,10 @@ import {
   addFollower,
   removeFollower,
   totalLikes,
-  uploadUserImage
+  uploadUserImage,
 } from "./user";
 
-export const baseURL = "http://192.168.1.5:8000";
+export const baseURL = process.env.REACT_APP_API_HOSTNAME;
 
 export const api = axios.create({
   baseURL,
@@ -32,6 +32,10 @@ export const api = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+api.defaults.headers.common = {
+  "X-API-Key": process.env.REACT_APP_API_KEY,
+};
 
 const services = {
   createRecipe,
@@ -52,7 +56,7 @@ const services = {
   totalLikes,
   findRecipeByUserMeta,
   uploadRecipeImage,
-  uploadUserImage
+  uploadUserImage,
 };
 
 export default services;

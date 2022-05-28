@@ -1,6 +1,5 @@
 import { CircularProgress, Grid, Typography } from "@mui/material";
 import useRecipeList from "../../hooks/useRecipeList";
-import { imagePath } from "../../env";
 import { VisibilityRounded } from "@mui/icons-material";
 
 interface Props {
@@ -29,7 +28,7 @@ const RecipeList: React.FC<Props> = ({ userId, listType, handleOpen }) => {
           height={185}
           xs={4}
           sx={{
-            background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.5) 100%), url(${imagePath}/${recipe.picture})`,
+            background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.5) 100%), url(${process.env.REACT_APP_RECIPE_IMAGE_PATH}/${recipe.picture})`,
             backgroundColor: "background.default",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",

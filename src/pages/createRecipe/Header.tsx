@@ -3,7 +3,6 @@ import { Fab, Grid, IconButton, Input, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { imagePath, placeholder } from "../../env";
 
 const Header: React.FC = () => {
   const {
@@ -13,7 +12,7 @@ const Header: React.FC = () => {
   } = useFormContext();
   const tempPicture = watch("picture") ?? [];
   const [currentPicture, setPicture] = useState<string>(
-    `${imagePath}/${placeholder}`
+    `${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${process.env.REACT_APP_IMAGE_PLACEHOLDER}`
   );
 
   const changePicture = tempPicture[0];

@@ -3,7 +3,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { hostname } from "./env";
 import reportWebVitals from "./reportWebVitals";
 import MainRoutes from "./Routes";
 import { store } from "./store";
@@ -13,9 +12,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Auth0Provider
-    domain="tiktaco.eu.auth0.com"
-    clientId="XaAlkORfTLA9DPs6wxPS0S2kW3EGjVb9"
-    redirectUri={`http://${hostname}`}
+    domain={process.env.REACT_APP_DOMAIN}
+    clientId={process.env.REACT_APP_CLIENT_ID}
+    redirectUri={`http://${process.env.REACT_APP_HOSTNAME}`}
   >
     <BrowserRouter>
       <Provider store={store}>

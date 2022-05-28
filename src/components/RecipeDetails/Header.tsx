@@ -1,6 +1,5 @@
 import { CloseRounded } from "@mui/icons-material";
 import { Fab, Grid } from "@mui/material";
-import { imagePath } from "../../env";
 
 interface Props {
   handleTransition: () => void;
@@ -19,7 +18,7 @@ const Header: React.FC<Props> = ({ handleTransition, picture }) => {
       borderBottom="5px solid"
       borderColor="primary.main"
       sx={{
-        background: `url(${imagePath}/${picture}) no-repeat`,
+        background: `url(${process.env.REACT_APP_RECIPE_IMAGE_PATH}/${picture}) no-repeat`,
         backgroundColor: "background.default",
         backgroundSize: "cover",
         backgroundPosition: "center",

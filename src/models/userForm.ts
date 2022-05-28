@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import { formats } from "../env";
 
 export const updateSchema = yup.object({
   name: yup.string().max(50, "max length is 50 chars").required(),
@@ -18,7 +17,7 @@ export const updateSchema = yup.object({
     .test(
       "FileType",
       "File must be an image",
-      (value) => !value[0] || (value[0] && formats.includes(value[0].type))
+      (value) => !value[0] || (value[0] && process.env.REACT_APP_IMAGE_FORMATS.includes(value[0].type))
     ),
   bio: yup.string().max(250, "max length is 250 chars"),
 });
@@ -41,7 +40,7 @@ export const createSchema = yup.object({
     .test(
       "FileType",
       "File must be an image",
-      (value) => !value[0] || (value[0] && formats.includes(value[0].type))
+      (value) => !value[0] || (value[0] && process.env.REACT_APP_IMAGE_FORMATS.includes(value[0].type))
     ),
   bio: yup.string().max(250, "max length is 250 chars"),
 });

@@ -1,6 +1,5 @@
 import { SettingsRounded } from "@mui/icons-material";
 import { Avatar, Grid, IconButton, Typography } from "@mui/material";
-import { avatarPath } from "../../env";
 
 interface Props {
   name: string;
@@ -51,7 +50,7 @@ const Header: React.FC<Props> = ({
         <Grid item>
           <Avatar
             alt={name}
-            src={`${avatarPath}/${picture}`}
+            src={`${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${picture}`}
             sx={{
               width: 90,
               height: 90,
