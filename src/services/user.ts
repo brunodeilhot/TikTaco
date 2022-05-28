@@ -19,11 +19,9 @@ export const createUser = async ({
       bio: bio,
     })
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -45,11 +43,9 @@ export const updateUser = async ({
       bio: bio,
     })
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -69,11 +65,9 @@ export const findUserById = async (id: string): Promise<IUser> => {
   return api
     .get(`${baseURL}/user/find/${id}`)
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -85,11 +79,9 @@ export const addFollower = async (
   return api
     .post(`${baseURL}/user/followers/${id}/add/${userId}`)
     .then((response) => {
-      console.log(response);
       return response.status;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -101,11 +93,9 @@ export const removeFollower = async (
   return api
     .delete(`${baseURL}/user/followers/${id}/remove/${userId}`)
     .then((response) => {
-      console.log(response);
       return response.status;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -114,11 +104,9 @@ export const totalLikes = async (id: string): Promise<number | string> => {
   return api
     .get(`${baseURL}/user/meta/likes/total/${id}`)
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };

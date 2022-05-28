@@ -30,11 +30,9 @@ export const createRecipe = async ({
       diet: diet,
     })
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -63,11 +61,9 @@ export const updateRecipe = async ({
       diet: diet,
     })
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -83,11 +79,9 @@ export const findRecipeById = async (
         : `${baseURL}/recipes/find/id/${id}`
     )
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -99,11 +93,9 @@ export const findRecipeByUser = async (
   return api
     .get(`${baseURL}/recipes/find/user/${userId}/${limit}`)
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -116,11 +108,9 @@ export const findRecipeByUserMeta = async (
   return api
     .get(`${baseURL}/recipes/find/user/${userId}/meta/${meta}/${limit}`)
     .then((response) => {
-      console.log(response);
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
@@ -135,7 +125,6 @@ export const feedRecipes = async (
       return response.data;
     })
     .catch((error) => {
-      console.error(error);
       return error.message;
     });
 };
