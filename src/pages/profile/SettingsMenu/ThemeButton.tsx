@@ -1,18 +1,14 @@
 import { DarkModeRounded, LightModeRounded } from "@mui/icons-material";
 import { Switch } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector } from "../../../hooks";
+import useThemeChange from "../../../hooks/useThemeChange";
 
 const ThemeButton: React.FC = () => {
-  const dispatch = useDispatch();
-
-  // Controls toggle of dark/light mode
-  // const darkMode = useSelector((state) => state.darkMode);
+  const { setDarkMode } = useThemeChange();
+  const { dark } = useAppSelector((state) => state.theme);
 
   const toggleMode = () => {
-    // dispatch({
-    //   type: "THEME_MODE",
-    //   payload: !darkMode,
-    // });
+    setDarkMode(!dark);
   };
 
   const iconOptions = {
@@ -27,8 +23,7 @@ const ThemeButton: React.FC = () => {
 
   return (
     <Switch
-      // checked={darkMode}
-      checked={true}
+      checked={dark}
       onChange={toggleMode}
       aria-label="theme mode"
       color="secondary"
