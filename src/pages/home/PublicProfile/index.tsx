@@ -1,8 +1,7 @@
-import { Button, Drawer, Grid, Typography } from "@mui/material";
+import { Drawer, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import Loading from "../../../components/Loading";
 import RecipeDetails from "../../../components/RecipeDetails";
-import useAuth from "../../../hooks/useAuth";
 import useUserInfo from "../../../hooks/useUserInfo";
 import Meta from "../../profile/Meta";
 import RecipeList from "../../profile/RecipeList";
@@ -19,8 +18,10 @@ const PublicProfile: React.FC<Props> = ({
   returnToHome,
   publicUser,
 }) => {
-  const { isAuthenticated } = useAuth()
   const user = useUserInfo(publicUser);
+
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("md"));
 
   /**
    * State and handle functions responsible for the recipe details modal
@@ -46,7 +47,7 @@ const PublicProfile: React.FC<Props> = ({
 
   return (
     <Drawer anchor="right" open={publicProfile} onClose={returnToHome}>
-      <Grid container flexDirection="column" flexWrap="nowrap" width="100vw">
+      <Grid container flexDirection="column" flexWrap="nowrap" width={desktop ? "27vw" : "100vw"}>
         <Header
           name={user.name}
           username={user.username}

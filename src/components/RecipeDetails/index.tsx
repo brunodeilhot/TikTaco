@@ -1,4 +1,11 @@
-import { Dialog, Fade, Grid } from "@mui/material";
+import {
+  Dialog,
+  Drawer,
+  Fade,
+  Grid,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 import Header from "./Header";
 import Intro from "./Intro";
@@ -17,25 +24,13 @@ interface Props {
 const RecipeDetails: React.FC<Props> = ({ open, handleClose, recipeId }) => {
   const recipeDetails = useRecipeDetails(recipeId);
 
-  // const { desktop } = useSelector((state) => state.mediaqueries);
-  const desktop = false;
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("md"));
 
   if (recipeDetails === null) return <Loading />;
   // Destructuring of the recipe details data received from the api
-  const {
-    _id,
-    title,
-    description,
-    picture,
-    diet,
-    servings,
-    time,
-    ingredients,
-    steps,
-    created_at,
-    user,
-    meta,
-  } = recipeDetails;
+  const { title, picture, diet, servings, time, ingredients, steps, user } =
+    recipeDetails;
 
   return (
     <Dialog
@@ -46,6 +41,13 @@ const RecipeDetails: React.FC<Props> = ({ open, handleClose, recipeId }) => {
       transitionDuration={800}
       fullScreen={!desktop}
       hideBackdrop={!desktop}
+      PaperProps={{
+        sx: {
+          maxWidth: desktop ? "40%" : "100%",
+          maxHeight: desktop ? "90%" : "100%",
+          borderRadius: desktop ? "20px" : 0,
+        },
+      }}
     >
       <Grid container>
         <Grid container item>

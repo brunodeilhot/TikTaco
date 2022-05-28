@@ -15,7 +15,7 @@ const ThemeButton: React.FC = () => {
     fontSize: 30,
     padding: 0.5,
     marginTop: -0.7,
-    backgroundColor: "secondary.main",
+    backgroundColor: "#383A47",
     borderRadius: "50%",
     boxShadow:
       "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",

@@ -76,7 +76,7 @@ const ActionButtons: React.FC = () => {
   }, [path]);
 
   const handlePathChange = (_e: React.SyntheticEvent, value: string) => {
-    if (!isAuthenticated && value !== "/") dispatch(updateDialogStatus(true));
+    if (!isAuthenticated && value !== "/") return dispatch(updateDialogStatus(true));
     if (isAuthenticated && halfAuth) navigate("/create-profile");
     setActive(value);
   };

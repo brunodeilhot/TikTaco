@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 import { IRecipePreview } from "../../../models/recipe";
 import RecipeDetails from "../../../components/RecipeDetails";
@@ -19,6 +19,11 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle, returnToHome }) => {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAuth();
   const userState = useAppSelector((state) => state.user);
+  const { _id, title, picture, meta, user } = recipe;
+
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("md"));
+
   const {
     addLike,
     removeLike,
@@ -27,10 +32,10 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle, returnToHome }) => {
     addFollower,
     removeFollower,
   } = services;
+
   const recipesLiked = userState.user.meta.rec_liked;
   const recipesStarred = userState.user.meta.rec_starred;
   const usersFollowed = userState.user.meta.following;
-  const { _id, title, picture, meta, user } = recipe;
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -111,11 +116,19 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle, returnToHome }) => {
       <Grid
         container
         flexWrap="nowrap"
-        marginBottom="76px"
+        marginBottom={desktop ? "30px" : "76px"}
         zIndex="appBar"
         height="100%"
       >
-        <Title handleOpen={handleOpen} title={title} />
+        <Grid
+          container
+          item
+          paddingLeft={desktop ? 2 : 0}
+          paddingBottom={desktop ? 2 : 0}
+          onClick={handleOpen}
+        >
+          <Title title={title} />
+        </Grid>
         <MetaContainer
           handleOpen={handleOpen}
           handleClickAvatar={handleClickAvatar}

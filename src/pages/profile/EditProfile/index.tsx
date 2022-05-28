@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ChevronLeftRounded } from "@mui/icons-material";
-import { Button, Drawer, Grid, IconButton, Typography } from "@mui/material";
+import { Button, Drawer, Grid, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import CustomTextField from "../../createRecipe/CustomTextField";
@@ -34,6 +34,10 @@ const EditProfile: React.FC<Props> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { updateUser, uploadUserImage } = services;
+
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("md"));
+
   const methods = useForm<FormData>({
     resolver: yupResolver(updateSchema),
     defaultValues: {
@@ -94,10 +98,10 @@ const EditProfile: React.FC<Props> = ({
     );
 
   return (
-    <Drawer anchor="right" open={editProfile} onClose={returnToProfile}>
+    <Drawer anchor="right" open={editProfile} onClose={returnToProfile} >
       <Grid
         container
-        width="100vw"
+        width={desktop ? "30vw" : "100vw"}
         flexDirection="column"
         flexWrap="nowrap"
         alignItems="center"

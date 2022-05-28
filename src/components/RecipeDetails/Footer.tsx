@@ -17,7 +17,7 @@ const Footer: React.FC<Props> = ({ username, id }) => (
     >
       COPYRIGHT <CopyrightRounded fontSize="small" sx={{ marginX: 0.5 }} />
       Recipe by
-      <Link href={id} target="_blank" underline="none" sx={{ ml: 0.5 }}>
+      <Link target="_blank" underline="none" sx={{ ml: 0.5 }}>
         {username}
       </Link>
     </Typography>

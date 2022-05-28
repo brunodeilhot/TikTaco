@@ -8,77 +8,59 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import ThemeButton from "./ThemeButton";
 
 const SettingsList = () => {
   const { logout } = useAuth0();
-  const desktop = false;
-  const desktopLg = false;
+
+  const fontColor = "#383A47";
 
   const navList = [
     {
       name: "Logout",
-      icon: <LogoutRounded color="secondary" />,
+      icon: <LogoutRounded sx={{ color: fontColor }}/>,
       link: "logout",
-      mobile: true,
-      desktop: true,
     },
   ];
 
-  const filteredNavList = navList.filter((item) =>
-    desktop ? item.desktop === true : item.mobile === true
-  );
-
   return (
-    <List
-      dense={desktop && !desktopLg}
-      sx={{ display: desktop ? "flex" : "initial" }}
-    >
-      {filteredNavList.map((item) => (
+    <List>
+      {navList.map((item) => (
         <ListItem
-          divider={!desktop}
+          divider
           disablePadding
           key={item.name}
-          sx={{ width: desktop ? "fit-content" : "100%" }}
+          sx={{ width: "100%", borderColor: fontColor }}
         >
           {item.link !== "logout" ? (
             <ListItemButton
               component={Link}
               to={item.link}
-              sx={{ width: "100%", paddingX: desktop && !desktopLg ? 1 : 2 }}
+              sx={{ width: "100%", paddingX: 2 }}
             >
               {item.icon === null ? null : (
                 <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
               )}
               <ListItemText
                 primary={item.name}
-                primaryTypographyProps={{ color: "secondary", align: "right" }}
+                primaryTypographyProps={{ color: fontColor, align: "right" }}
               />
             </ListItemButton>
           ) : (
             <ListItemButton
               onClick={() => logout({ returnTo: window.location.origin })}
-              sx={{ width: "100%", paddingX: desktop && !desktopLg ? 1 : 2 }}
+              sx={{ width: "100%", paddingX: 2 }}
             >
               {item.icon === null ? null : (
                 <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
               )}
               <ListItemText
                 primary={item.name}
-                primaryTypographyProps={{ color: "secondary", align: "right" }}
+                primaryTypographyProps={{ align: "right", sx: { color: fontColor } }}
               />
             </ListItemButton>
           )}
         </ListItem>
       ))}
-      {desktop && (
-        <ListItem
-          disablePadding
-          sx={{ width: "fit-content", marginLeft: desktopLg ? 5 : 2.5 }}
-        >
-          <ThemeButton />
-        </ListItem>
-      )}
     </List>
   );
 };

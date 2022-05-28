@@ -1,41 +1,42 @@
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard, Mousewheel } from "swiper";
-import ActionButtons from "../../components/ActionButtons";
-import useViewHeight from "../../hooks/useViewHeight";
-import { IRecipePreview } from "../../models/recipe";
-import Recipe from "./Recipe";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import {
-  updateFollowActRec,
-  updateDiscovActRec,
-  updateActiveFeed,
-} from "../../store/feedSlice";
-import FeedTabs from "../../components/FeedTabs";
+import { updateActiveFeed } from "../../store/feedSlice";
 import { updateDialogStatus } from "../../store/loginDialogSlice";
 import Loading from "../../components/Loading";
-import NoFollows from "../../components/NoFollows";
 import useUpdateMeta from "../../hooks/useUpdateMeta";
 import useLoading from "../../hooks/useLoading";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import PublicProfile from "./PublicProfile";
+import Mobile from "./Mobile";
+import Desktop from "./Desktop";
 
 const Home = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { user, isAuthenticated, halfAuth } = useAuth();
 
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("md"));
+
+  /**
+   * If user is authenticated but has not yet created a profile redirects to create profile page
+   */
+  const { user, isAuthenticated, halfAuth } = useAuth();
   isAuthenticated && halfAuth && navigate("/create-profile");
 
   const userEmail = user && user.email;
 
+  /**
+   * Calls hook to update the feed and user data if user is authenticated
+   * and sends data to the redux store
+   */
   const [toggle, setToggle] = useState(false);
   useUpdateMeta(userEmail, toggle);
 
-  const { viewHeight } = useViewHeight();
-
+  /**
+   * States that represent the recipes of each feed (following and discover)
+   * and also which current feed is selected
+   */
   const feed = useAppSelector((state) => state.feed.activeFeed);
   const followActiveRecipe = useAppSelector(
     (state) => state.feed.discovActiveRecipe
@@ -66,62 +67,40 @@ const Home = () => {
   const [publicProfile, setPublicProfile] = useState<boolean>(false);
   const [publicUser, setPublicUser] = useState<string>();
 
-  const returnToHome = (event: React.SyntheticEvent, id?: string) => {
+  const returnToHome = (_event: React.SyntheticEvent, id?: string) => {
     setPublicProfile(!publicProfile);
     id && setPublicUser(id);
   };
 
-  if (isLoadingFeed && feed === 1) return <Loading />;
+  if (isLoadingFeed && feed === 1) return <Grid container justifyContent="center"><Loading /></Grid>;
 
   return (
-    <Grid container>
-      <FeedTabs feed={feed} changeFeed={changeFeed} />
-
-      {recipes.length === 0 && feed === 0 && <NoFollows />}
-
-      {recipes.length > 0 && (
-        <Swiper
-          style={{ width: "100%" }}
-          height={viewHeight}
-          modules={[Keyboard, Mousewheel]}
-          direction={"vertical"}
-          keyboard
-          mousewheel
-          onRealIndexChange={(swiper) => {
-            setTimeout(() => {
-              dispatch(
-                feed === 0
-                  ? updateFollowActRec(swiper.activeIndex)
-                  : updateDiscovActRec(swiper.activeIndex)
-              );
-            }, 100);
-          }}
-          initialSlide={feed === 0 ? followActiveRecipe : discovActiveRecipe}
-          observer
-          onObserverUpdate={(swiper) => {
-            feed === 0
-              ? swiper.slideTo(followActiveRecipe, 0, true)
-              : swiper.slideTo(discovActiveRecipe, 0, true);
-          }}
-        >
-          {recipes.map((recipe: IRecipePreview) => (
-            <SwiperSlide key={recipe._id}>
-              <Recipe
-                recipe={recipe}
-                setToggle={setToggle}
-                returnToHome={returnToHome}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+    <>
+      {desktop ? (
+        <Desktop
+          feed={feed}
+          recipes={recipes}
+          followActiveRecipe={followActiveRecipe}
+          discovActiveRecipe={discovActiveRecipe}
+          setToggle={setToggle}
+          returnToHome={returnToHome}
+          publicProfile={publicProfile}
+          publicUser={publicUser}
+        />
+      ) : (
+        <Mobile
+          feed={feed}
+          changeFeed={changeFeed}
+          recipes={recipes}
+          followActiveRecipe={followActiveRecipe}
+          discovActiveRecipe={discovActiveRecipe}
+          setToggle={setToggle}
+          returnToHome={returnToHome}
+          publicProfile={publicProfile}
+          publicUser={publicUser}
+        />
       )}
-      <PublicProfile
-        returnToHome={returnToHome}
-        publicProfile={publicProfile}
-        publicUser={publicUser}
-      />
-      <ActionButtons />
-    </Grid>
+    </>
   );
 };
 

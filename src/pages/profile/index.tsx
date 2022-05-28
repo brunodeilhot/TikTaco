@@ -1,10 +1,18 @@
-import { Button, Grid, Toolbar, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ActionButtons from "../../components/ActionButtons";
 import RecipeDetails from "../../components/RecipeDetails";
 import { useAppSelector } from "../../hooks";
 import useAuth from "../../hooks/useAuth";
+import NavDesktop from "../home/NavDesktop";
 import EditProfile from "./EditProfile";
 import Header from "./Header";
 import Meta from "./Meta";
@@ -20,6 +28,9 @@ const Profile: React.FC = () => {
   isAuthenticated && halfAuth && navigate("/create-profile");
 
   const { user } = useAppSelector((state) => state.user);
+
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("md"));
 
   /**
    * State and handle function responsible for the tab menu
@@ -57,12 +68,17 @@ const Profile: React.FC = () => {
    * State and handle functions responsible for the settings drawer
    */
 
-   const [settings, setSettings] = useState<boolean>(false);
+  const [settings, setSettings] = useState<boolean>(false);
 
-   const toggleSettings = () => setSettings(!settings);
+  const toggleSettings = () => setSettings(!settings);
 
   return (
-    <Grid container flexDirection="column" flexWrap="nowrap">
+    <Grid
+      container
+      flexDirection="column"
+      flexWrap="nowrap"
+      paddingX={desktop ? "30%" : 0}
+    >
       <Header
         name={user.name}
         username={user.username}
@@ -102,7 +118,8 @@ const Profile: React.FC = () => {
       />
       <SettingsMenu toggleSettings={toggleSettings} settings={settings} />
       <Toolbar />
-      <ActionButtons />
+      {!desktop && <ActionButtons />}
+      {desktop && <NavDesktop />}
     </Grid>
   );
 };

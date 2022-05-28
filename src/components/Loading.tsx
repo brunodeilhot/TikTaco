@@ -1,8 +1,11 @@
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import useViewHeight from "../hooks/useViewHeight";
 import Logo from "../assets/Logo.svg";
 
 const Loading: React.FC = () => {
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("md"));
+
   const { viewHeight } = useViewHeight();
 
   return (
@@ -13,7 +16,7 @@ const Loading: React.FC = () => {
       flexDirection="column"
       flexWrap="nowrap"
       height={viewHeight}
-      width="100vw"
+      width={desktop ? "30vw" : "100vw"}
       sx={{ backgroundColor: "background.default" }}
     >
       <Grid item>

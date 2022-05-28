@@ -2,10 +2,9 @@ import { Grid, Typography } from "@mui/material";
 
 interface Props {
   title: string;
-  handleOpen: () => void;
 }
 
-const Title: React.FC<Props> = ({ title, handleOpen }) => (
+const Title: React.FC<Props> = ({ title }) => (
   <Grid
     xs={9}
     container
@@ -15,7 +14,6 @@ const Title: React.FC<Props> = ({ title, handleOpen }) => (
     paddingLeft={4}
     justifyContent="flex-end"
     height="100%"
-    onClick={handleOpen}
     sx={{ textDecoration: "none" }}
   >
     <Typography

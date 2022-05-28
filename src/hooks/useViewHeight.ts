@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 
-const useViewHeight = (): { viewHeight: number } => {
+const useViewHeight = (
+  ref?: React.RefObject<HTMLDivElement>
+): { viewHeight: number } => {
   const [viewHeight, setViewHeight] = useState<number>(window.innerHeight);
   const [debouncedState, setDebounced] = useState<boolean>(false);
 
   const handleResize = () => {
-    setViewHeight(window.innerHeight);
+    !ref && setViewHeight(window.innerHeight);
+    ref && ref.current && setViewHeight(ref.current.clientHeight);
     setDebounced(false);
   };
 
@@ -15,6 +18,10 @@ const useViewHeight = (): { viewHeight: number } => {
       setTimeout(handleResize, 200);
     }
   };
+
+  useEffect(() => {
+    handleResize();
+  }, [ref]);
 
   useEffect(() => {
     window.addEventListener("resize", handleDebounce);
