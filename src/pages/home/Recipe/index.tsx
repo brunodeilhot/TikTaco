@@ -2,11 +2,13 @@ import { Grid } from "@mui/material";
 import { Dispatch, SetStateAction, useState } from "react";
 import { IRecipePreview } from "../../../models/recipe";
 import RecipeDetails from "../../../components/RecipeDetails";
-import { useAppSelector } from "../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 import services from "../../../services";
 import Title from "./Title";
 import MetaContainer from "./MetaContainer";
-import { avatarPath, imagePath } from '../../../env'
+import { avatarPath, imagePath } from "../../../env";
+import useAuth from "../../../hooks/useAuth";
+import { updateDialogStatus } from "../../../store/loginDialogSlice";
 
 interface Props {
   recipe: IRecipePreview;
@@ -14,6 +16,8 @@ interface Props {
 }
 
 const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
+  const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAuth();
   const userState = useAppSelector((state) => state.user);
   const {
     addLike,
@@ -39,7 +43,8 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
   };
 
   const handleClickAvatar = () => {
-    console.log(userState);
+    if (!isAuthenticated) return dispatch(updateDialogStatus(true));
+
     console.log("avatar");
   };
 
@@ -48,6 +53,8 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
     userId: string,
     userIsFollowed: number
   ) => {
+    if (!isAuthenticated) return dispatch(updateDialogStatus(true));
+
     userIsFollowed === -1
       ? addFollower(userState.user._id, userId).then(() =>
           setToggle((prevState) => !prevState)
@@ -62,6 +69,8 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
     recipeId: string,
     recipeIsLiked: number
   ) => {
+    if (!isAuthenticated) return dispatch(updateDialogStatus(true));
+
     recipeIsLiked === -1
       ? addLike(recipeId, userState.user._id).then(() =>
           setToggle((prevState) => !prevState)
@@ -76,6 +85,8 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
     recipeId: string,
     recipeIsStarred: number
   ) => {
+    if (!isAuthenticated) return dispatch(updateDialogStatus(true));
+
     recipeIsStarred === -1
       ? addStar(userState.user._id, recipeId).then(() =>
           setToggle((prevState) => !prevState)
