@@ -18,13 +18,25 @@ import Loading from "../../components/Loading";
 import NoFollows from "../../components/NoFollows";
 import useUpdateMeta from "../../hooks/useUpdateMeta";
 import useLoading from "../../hooks/useLoading";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { user, isAuthenticated, halfAuth } = useAuth()
+
+  isAuthenticated && halfAuth && navigate("/create-profile");
+
+  const userEmail = user && user.email;
+
+  const [toggle, setToggle] = useState(false);
+  useUpdateMeta(userEmail, toggle);
+
   const { viewHeight } = useViewHeight();
   const feed = useAppSelector((state) => state.feed.activeFeed);
   const followActiveRecipe = useAppSelector(
-    (state) => state.feed.followActiveRecipe
+    (state) => state.feed.discovActiveRecipe
   );
   const discovActiveRecipe = useAppSelector(
     (state) => state.feed.discovActiveRecipe
@@ -33,23 +45,17 @@ const Home = () => {
     feed === 0 ? state.feed.followRecipes : state.feed.discovRecipes
   );
 
-  const isLoading = useLoading(recipes.length);
-
-  const isLoggedIn = true;
-  const userEmail = "maria@fakemail.com";
-
-  const [toggle, setToggle] = useState(false);
-  useUpdateMeta(userEmail, "626675d1c2ee3c90b785c9e0", toggle);
+  const isLoadingFeed = useLoading(recipes.length);
 
   const changeFeed = (_event: React.SyntheticEvent, newFeed: number) => {
-    if (newFeed === 0 && !isLoggedIn) {
+    if (newFeed === 0 && !isAuthenticated) {
       dispatch(updateDialogStatus(true));
       return;
     }
     dispatch(updateActiveFeed(newFeed));
   };
 
-  if (isLoading && feed === 1) return <Loading />;
+  if (isLoadingFeed && feed === 1) return <Loading />;
 
   return (
     <Grid container>

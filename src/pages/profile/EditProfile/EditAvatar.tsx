@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { avatarPath, placeholder } from "../../../env";
 
 interface Props {
-  picture: string;
+  picture?: string;
 }
 
 const EditAvatar: React.FC<Props> = ({ picture }) => {

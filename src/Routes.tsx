@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 import App from "./App";
-import CreateRecipe from "./components/CreateRecipe";
+import CreateProfile from "./pages/createProfile";
+import CreateRecipe from "./pages/createRecipe";
 import Home from "./pages/home";
 import Notifications from "./pages/notifications";
 import Profile from "./pages/profile";
@@ -15,6 +16,7 @@ const MainRoutes = () => {
         <Route path="search" element={<Search />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="create" element={<CreateRecipe />} />
+        <Route path="create-profile" element={<CreateProfile />} />
       </Route>
     </Routes>
   );

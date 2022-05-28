@@ -6,9 +6,15 @@ interface Props {
   name: string;
   username: string;
   picture: string;
+  toggleSettings: () => void;
 }
 
-const Header: React.FC<Props> = ({ name, username, picture }) => {
+const Header: React.FC<Props> = ({
+  name,
+  username,
+  picture,
+  toggleSettings,
+}) => {
   return (
     <Grid container>
       <Grid
@@ -30,21 +36,34 @@ const Header: React.FC<Props> = ({ name, username, picture }) => {
           </Typography>
         </Grid>
         <Grid item position="absolute" right={10}>
-          <IconButton onClick={() => console.log("settings")}>
+          <IconButton onClick={toggleSettings}>
             <SettingsRounded fontSize="large" color="primary" />
           </IconButton>
         </Grid>
       </Grid>
-      <Grid container item flexDirection="column" flexWrap="nowrap" alignItems="center">
+      <Grid
+        container
+        item
+        flexDirection="column"
+        flexWrap="nowrap"
+        alignItems="center"
+      >
         <Grid item>
           <Avatar
             alt={name}
             src={`${avatarPath}/${picture}`}
-            sx={{ width: 90, height: 90, border: '3px solid', borderColor: 'primary.main' }}
+            sx={{
+              width: 90,
+              height: 90,
+              border: "3px solid",
+              borderColor: "primary.main",
+            }}
           />
         </Grid>
         <Grid item pt={1}>
-          <Typography variant="body2" color="primary">@{username}</Typography>
+          <Typography variant="body2" color="primary">
+            @{username}
+          </Typography>
         </Grid>
       </Grid>
     </Grid>

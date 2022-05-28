@@ -13,6 +13,7 @@ const Loading: React.FC = () => {
       flexDirection="column"
       flexWrap="nowrap"
       height={viewHeight}
+      width="100vw"
       sx={{ backgroundColor: "background.default" }}
     >
       <Grid item>

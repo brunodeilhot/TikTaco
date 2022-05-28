@@ -1,12 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ChevronLeftRounded } from "@mui/icons-material";
 import { Button, Drawer, Grid, IconButton, Typography } from "@mui/material";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import CustomTextField from "../../../components/CreateRecipe/CustomTextField";
+import CustomTextField from "../../createRecipe/CustomTextField";
 import Loading from "../../../components/Loading";
 import { IUser } from "../../../models/user";
-import { schema } from "../../../models/userForm";
+import { updateSchema } from "../../../models/userForm";
 import { v4 as uuid } from "uuid";
 import EditAvatar from "./EditAvatar";
 import services from "../../../services";
@@ -35,7 +35,7 @@ const EditProfile: React.FC<Props> = ({
   const dispatch = useAppDispatch();
   const { updateUser, uploadUserImage } = services;
   const methods = useForm<FormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(updateSchema),
     defaultValues: {
       name: user.name,
       email: user.email,
@@ -52,14 +52,15 @@ const EditProfile: React.FC<Props> = ({
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const uniqueId = uuid();
-    const tempFile = data.picture ? data.picture[0] : undefined;
-    const fileType = tempFile ? tempFile.name.split(".") : [];
+    const tempFile =
+      data.picture && data.picture.length !== 0 ? data.picture[0] : undefined;
+    const fileType = tempFile && tempFile.name.split(".");
     const imageName =
-      tempFile && `${uniqueId}.${fileType[fileType.length - 1]}`;
+      tempFile && fileType && `${uniqueId}.${fileType[fileType.length - 1]}`;
 
     const updatedUser = {
       ...data,
-      _id: "626675d1c2ee3c90b785c9e0",
+      _id: user._id,
       picture: tempFile ? imageName : tempFile,
     };
 
@@ -68,7 +69,7 @@ const EditProfile: React.FC<Props> = ({
 
     setLoading(true);
 
-    uploadUserImage(formData);
+    tempFile && uploadUserImage(formData);
 
     updateUser(updatedUser).then(() => {
       dispatch(
@@ -85,7 +86,12 @@ const EditProfile: React.FC<Props> = ({
     });
   };
 
-  if (loading) return <Loading />;
+  if (loading)
+    return (
+      <Drawer anchor="right" open={editProfile} onClose={returnToProfile}>
+        <Loading />
+      </Drawer>
+    );
 
   return (
     <Drawer anchor="right" open={editProfile} onClose={returnToProfile}>

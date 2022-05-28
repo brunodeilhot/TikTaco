@@ -7,8 +7,9 @@ import {
 } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../hooks";
+import useAuth from "../hooks/useAuth";
 import AlertRoundedOutlined from "../icons/AlertRoundedOutlined";
 import HomeRoundedOutlined from "../icons/HomeRoundedOutlined";
 import PersonRoundedOutlined from "../icons/PersonRoundedOutlined";
@@ -17,7 +18,9 @@ import { updateDialogStatus } from "../store/loginDialogSlice";
 
 const ActionButtons: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isLoggedIn = true;
+  const navigate = useNavigate();
+  const { isAuthenticated, halfAuth } = useAuth();
+
   const iconColor = "#FAFAFA";
   const actionBtList = [
     {
@@ -73,8 +76,9 @@ const ActionButtons: React.FC = () => {
   }, [path]);
 
   const handlePathChange = (_e: React.SyntheticEvent, value: string) => {
-    if (!isLoggedIn && value !== "/") dispatch(updateDialogStatus(true));
-    if (isLoggedIn) setActive(value);
+    if (!isAuthenticated && value !== "/") dispatch(updateDialogStatus(true));
+    if (isAuthenticated && halfAuth) navigate("/create-profile");
+    setActive(value);
   };
 
   return (
@@ -92,7 +96,7 @@ const ActionButtons: React.FC = () => {
             key={button.name}
             icon={active === button.link ? button.iconSelected : button.icon}
             component={Link}
-            to={!isLoggedIn ? "/" : button.link}
+            to={!isAuthenticated ? "/" : button.link}
             value={button.link}
             sx={{
               "&.Mui-selected": { paddingTop: 0 },

@@ -74,10 +74,14 @@ export const updateRecipe = async ({
 
 export const findRecipeById = async (
   id: string,
-  userId: string
+  userId: string | undefined
 ): Promise<IRecipe> => {
   return api
-    .get(`${baseURL}/recipes/find/id/${id}/${userId}`)
+    .get(
+      userId
+        ? `${baseURL}/recipes/find/id/${id}/${userId}`
+        : `${baseURL}/recipes/find/id/${id}`
+    )
     .then((response) => {
       console.log(response);
       return response.data;

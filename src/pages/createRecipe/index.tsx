@@ -10,9 +10,10 @@ import DietOptions from "./DietOptions";
 import services from "../../services";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
-import Loading from "../Loading";
+import Loading from "../../components/Loading";
 import { schema } from "../../models/recipeForm";
 import { Ingredient } from "../../models/recipe";
+import { useAuth0 } from "@auth0/auth0-react";
 
 type FormData = {
   title: string;
@@ -29,8 +30,12 @@ export interface Step {
 }
 
 const CreateRecipe: React.FC = () => {
-  const { createRecipe, uploadRecipeImage } = services;
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth0();
+  const { createRecipe, uploadRecipeImage } = services;
+
+  !isAuthenticated && navigate("/");
+
   const methods = useForm<FormData>({
     resolver: yupResolver(schema),
   });

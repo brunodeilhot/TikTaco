@@ -1,15 +1,24 @@
 import { Button, Grid, Toolbar, Typography } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ActionButtons from "../../components/ActionButtons";
 import RecipeDetails from "../../components/RecipeDetails";
 import { useAppSelector } from "../../hooks";
+import useAuth from "../../hooks/useAuth";
 import EditProfile from "./EditProfile";
 import Header from "./Header";
 import Meta from "./Meta";
 import ProfileFeedTab from "./ProfileFeedTab";
 import RecipeList from "./RecipeList";
+import SettingsMenu from "./SettingsMenu";
 
 const Profile: React.FC = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated, halfAuth } = useAuth();
+
+  !isAuthenticated && navigate("/");
+  isAuthenticated && halfAuth && navigate("/create-profile");
+
   const { user } = useAppSelector((state) => state.user);
 
   /**
@@ -44,17 +53,26 @@ const Profile: React.FC = () => {
 
   const returnToProfile = () => setEditProfile(!editProfile);
 
+  /**
+   * State and handle functions responsible for the settings drawer
+   */
+
+   const [settings, setSettings] = useState<boolean>(false);
+
+   const toggleSettings = () => setSettings(!settings);
+
   return (
     <Grid container flexDirection="column" flexWrap="nowrap">
       <Header
         name={user.name}
         username={user.username}
         picture={user.picture}
+        toggleSettings={toggleSettings}
       />
       <Meta user={user._id} meta={user.meta} />
       <Grid item alignSelf="center">
         <Button
-        onClick={returnToProfile}
+          onClick={returnToProfile}
           variant="outlined"
           sx={{ borderRadius: 10, textTransform: "uppercase", fontSize: 10 }}
         >
@@ -77,7 +95,12 @@ const Profile: React.FC = () => {
           recipeId={recipeId}
         />
       )}
-      <EditProfile returnToProfile={returnToProfile} editProfile={editProfile} user={user} />
+      <EditProfile
+        returnToProfile={returnToProfile}
+        editProfile={editProfile}
+        user={user}
+      />
+      <SettingsMenu toggleSettings={toggleSettings} settings={settings} />
       <Toolbar />
       <ActionButtons />
     </Grid>
