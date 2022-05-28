@@ -79,6 +79,7 @@ const Home = () => {
       {desktop ? (
         <Desktop
           feed={feed}
+          changeFeed={changeFeed}
           recipes={recipes}
           followActiveRecipe={followActiveRecipe}
           discovActiveRecipe={discovActiveRecipe}

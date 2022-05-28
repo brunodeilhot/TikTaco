@@ -1,4 +1,4 @@
-import { styled, Tab, Tabs } from "@mui/material";
+import { styled, Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
 
 interface Props {
   feed: number;
@@ -27,8 +27,12 @@ const TopTab = styled(Tab)(({ theme }) => ({
 }))
 
 const FeedTabs: React.FC<Props> = ({ feed, changeFeed }) => {
+
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("md"));
+
   return (
-    <TopTabs centered value={feed} onChange={changeFeed}>
+    <TopTabs centered value={feed} onChange={changeFeed} sx={{ top: desktop ? 60 : 15 }}>
       <TopTab label="following" />
       <TopTab label="discover" />
     </TopTabs>

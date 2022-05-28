@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-const Header: React.FC = () => {
+interface Props {
+  desktop?: boolean;
+}
+
+const Header: React.FC<Props> = ({ desktop }) => {
   const {
     register,
     watch,
@@ -33,7 +37,7 @@ const Header: React.FC = () => {
       item
       flexDirection="column"
       flexWrap="nowrap"
-      justifyContent="space-between"
+      justifyContent={desktop ? "flex-end" : "space-between"}
       alignItems="flex-end"
       minHeight="30vh"
       bgcolor="text.secondary"
@@ -46,13 +50,16 @@ const Header: React.FC = () => {
         backgroundPosition: "center",
       }}
     >
-      <Fab
-        aria-label="close"
-        onClick={handleReturn}
-        sx={{ backgroundColor: "background.default", mr: 2, mt: 3, p: 0.5 }}
-      >
-        <CloseRounded color="primary" sx={{ fontSize: 40 }} />
-      </Fab>
+      {!desktop && (
+        <Fab
+          aria-label="close"
+          onClick={handleReturn}
+          sx={{ backgroundColor: "background.default", mr: 2, mt: 3, p: 0.5 }}
+        >
+          <CloseRounded color="primary" sx={{ fontSize: 40 }} />
+        </Fab>
+      )}
+
       <Grid container item justifyContent="flex-end" alignItems="center">
         <Grid item>
           {errors.picture?.message && (

@@ -1,6 +1,5 @@
 import {
   Dialog,
-  Drawer,
   Fade,
   Grid,
   useMediaQuery,
@@ -45,6 +44,8 @@ const RecipeDetails: React.FC<Props> = ({ open, handleClose, recipeId }) => {
         sx: {
           maxWidth: desktop ? "40%" : "100%",
           maxHeight: desktop ? "90%" : "100%",
+          width: desktop ? "40%" : "100%",
+          height: desktop ? "90%" : "100%",
           borderRadius: desktop ? "20px" : 0,
         },
       }}

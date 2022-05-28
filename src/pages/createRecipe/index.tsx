@@ -1,4 +1,10 @@
-import { Button, Grid, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React, { useState } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,7 +19,9 @@ import { v4 as uuid } from "uuid";
 import Loading from "../../components/Loading";
 import { schema } from "../../models/recipeForm";
 import { Ingredient } from "../../models/recipe";
-import { useAuth0 } from "@auth0/auth0-react";
+import useAuth from "../../hooks/useAuth";
+import { useAppSelector } from "../../hooks";
+import NavDesktop from "../home/NavDesktop";
 
 type FormData = {
   title: string;
@@ -31,10 +39,15 @@ export interface Step {
 
 const CreateRecipe: React.FC = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth();
   const { createRecipe, uploadRecipeImage } = services;
 
   !isAuthenticated && navigate("/");
+
+  const { user } = useAppSelector((state) => state.user);
+
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const methods = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -43,8 +56,6 @@ const CreateRecipe: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = methods;
-  // const { desktop } = useSelector((state) => state.mediaqueries);
-  // const desktop = false;
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -60,7 +71,7 @@ const CreateRecipe: React.FC = () => {
       ...data,
       picture: imageName,
       steps: instructions,
-      user: "626675d1c2ee3c90b785c9e0",
+      user: user._id,
       diet: diets,
     };
 
@@ -80,9 +91,9 @@ const CreateRecipe: React.FC = () => {
   if (loading) return <Loading />;
 
   return (
-    <Grid container>
+    <Grid container paddingX={desktop ? "30%" : 0}>
       <FormProvider {...methods}>
-        <Header />
+        <Header desktop={desktop} />
         <Grid
           container
           flexDirection="column"
@@ -135,6 +146,9 @@ const CreateRecipe: React.FC = () => {
                 borderRadius: 10,
                 textTransform: "uppercase",
                 color: "background.paper",
+                "&:hover": {
+                  backgroundColor: "primary.main"
+                }
               }}
               type="submit"
             >
@@ -143,6 +157,7 @@ const CreateRecipe: React.FC = () => {
           </Grid>
         </Grid>
       </FormProvider>
+      {desktop && <NavDesktop />}
     </Grid>
   );
 };

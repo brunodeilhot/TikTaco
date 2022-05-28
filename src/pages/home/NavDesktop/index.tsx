@@ -12,12 +12,10 @@ const NavDesktop: React.FC = () => {
       item
       position="absolute"
       top="10%"
-      bottom="5%"
       left={desktopLarge ? "13%" : "8%"}
       maxWidth={200}
       flexDirection="column"
       flexWrap="nowrap"
-      zIndex="modal"
     >
       <Grid container flexDirection="column" alignItems="center">
         <Box

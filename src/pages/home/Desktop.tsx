@@ -10,9 +10,12 @@ import Recipe from "./Recipe";
 import { updateFollowActRec, updateDiscovActRec } from "../../store/feedSlice";
 import { Dispatch, SetStateAction, useRef } from "react";
 import NavDesktop from "./NavDesktop";
+import FeedTabs from "../../components/FeedTabs";
+import DesktopPageControl from "./DesktopPageControl";
 
 interface Props {
   feed: number;
+  changeFeed: (_event: React.SyntheticEvent, newFeed: number) => void;
   recipes: IRecipePreview[];
   followActiveRecipe: number;
   discovActiveRecipe: number;
@@ -24,6 +27,7 @@ interface Props {
 
 const Desktop: React.FC<Props> = ({
   feed,
+  changeFeed,
   recipes,
   followActiveRecipe,
   discovActiveRecipe,
@@ -51,6 +55,8 @@ const Desktop: React.FC<Props> = ({
         borderRadius="20px"
         ref={recipeContainer}
       >
+        <FeedTabs feed={feed} changeFeed={changeFeed} />
+
         {recipes.length === 0 && feed === 0 && <NoFollows />}
 
         {recipes.length > 0 && (
@@ -95,6 +101,7 @@ const Desktop: React.FC<Props> = ({
           publicUser={publicUser}
         />
         <NavDesktop />
+        <DesktopPageControl />
       </Grid>
     </Grid>
   );
