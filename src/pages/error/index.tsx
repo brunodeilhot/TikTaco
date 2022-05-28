@@ -1,16 +1,9 @@
+import { Box, Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Grid, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import SadLogo from "../assets/SadLogo.svg";
+import SadLogo from "../../assets/SadLogo.svg";
 
-interface Props {
-  desktop?: boolean;
-}
-
-const ErrorPage: React.FC<Props> = ({ desktop }) => {
-  const dispatch = useDispatch();
+const ErrorPage: React.FC = () => {
   const navigate = useNavigate();
 
   // error page displays for 5 seconds then redirects back to the home page
@@ -19,14 +12,15 @@ const ErrorPage: React.FC<Props> = ({ desktop }) => {
       navigate("/");
     }, 5000);
     return () => clearTimeout(timer);
-  }, [dispatch, navigate]);
+  }, [navigate]);
 
   return (
     <Grid
       container
       justifyContent="center"
       alignContent="center"
-      width={desktop ? "fit-content" : "100%"}
+      width="100%"
+      sx={{ backgroundColor: "background.default" }}
     >
       <Grid container item flexDirection="column" alignItems="center" p={2.5}>
         <Box

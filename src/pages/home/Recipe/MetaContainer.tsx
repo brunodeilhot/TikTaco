@@ -12,7 +12,7 @@ interface Props {
     recipeIsLiked: number
   ) => void;
   handleOpen: () => void;
-  handleClickAvatar: () => void;
+  handleClickAvatar: (e: React.SyntheticEvent) => void;
   toggleFollow: (
     e: React.SyntheticEvent,
     userId: string,

@@ -12,9 +12,10 @@ import { updateDialogStatus } from "../../../store/loginDialogSlice";
 interface Props {
   recipe: IRecipePreview;
   setToggle: Dispatch<SetStateAction<boolean>>;
+  returnToHome: (event: React.SyntheticEvent, id?: string) => void;
 }
 
-const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
+const Recipe: React.FC<Props> = ({ recipe, setToggle, returnToHome }) => {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAuth();
   const userState = useAppSelector((state) => state.user);
@@ -41,10 +42,8 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle }) => {
     setOpen(false);
   };
 
-  const handleClickAvatar = () => {
-    if (!isAuthenticated) return dispatch(updateDialogStatus(true));
-
-    console.log("avatar");
+  const handleClickAvatar = (e: React.SyntheticEvent) => {
+    returnToHome(e, user._id);
   };
 
   const toggleFollow = (

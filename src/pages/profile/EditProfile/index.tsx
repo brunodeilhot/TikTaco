@@ -144,6 +144,11 @@ const EditProfile: React.FC<Props> = ({
               name="username"
               label="@username"
               error={errors.username}
+              startAdornment={
+                <Typography color="primary" variant="body1">
+                  @
+                </Typography>
+              }
             />
             <CustomTextField
               multiline

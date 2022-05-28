@@ -13,11 +13,12 @@ interface Props {
   error?: FieldError;
   type?: string;
   endAdornment?: ReactNode;
+  startAdornment?: ReactNode;
   multiline?: boolean;
   disabled?: boolean;
 }
 
-const CustomTextField: React.FC<Props> = ({ name, label, error, type, endAdornment, multiline, disabled }) => {
+const CustomTextField: React.FC<Props> = ({ name, label, error, type, endAdornment, multiline, disabled, startAdornment }) => {
   const { register } = useFormContext();
   return (
     <FormControl error={error ? true : false} sx={{ width: "100%"}}>
@@ -28,6 +29,7 @@ const CustomTextField: React.FC<Props> = ({ name, label, error, type, endAdornme
         id={name}
         label={label}
         type={type ? type : "text"}
+        startAdornment={startAdornment}
         endAdornment={endAdornment}
         multiline={multiline}
         disabled={disabled}

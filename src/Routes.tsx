@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 import App from "./App";
 import CreateProfile from "./pages/createProfile";
 import CreateRecipe from "./pages/createRecipe";
+import ErrorPage from "./pages/error";
 import Home from "./pages/home";
 import Notifications from "./pages/notifications";
 import Profile from "./pages/profile";
@@ -17,6 +18,7 @@ const MainRoutes = () => {
         <Route path="notifications" element={<Notifications />} />
         <Route path="create" element={<CreateRecipe />} />
         <Route path="create-profile" element={<CreateProfile />} />
+        <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>
   );

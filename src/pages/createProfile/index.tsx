@@ -114,6 +114,11 @@ const CreateProfile: React.FC = () => {
             name="username"
             label="@username"
             error={errors.username}
+            startAdornment={
+              <Typography color="primary" variant="body1">
+                @
+              </Typography>
+            }
           />
           <CustomTextField
             multiline

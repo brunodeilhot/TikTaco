@@ -65,7 +65,7 @@ export const findUserByEmail = async (email: string): Promise<IUser> => {
     });
 };
 
-export const findUserById = async (id: string) => {
+export const findUserById = async (id: string): Promise<IUser> => {
   return api
     .get(`${baseURL}/user/find/${id}`)
     .then((response) => {

@@ -4,7 +4,7 @@ import ProfileFollow from "../../../icons/ProfileFollow";
 import { IUserMeta } from "../../../models/user";
 
 interface Props {
-  handleClickAvatar: () => void;
+  handleClickAvatar: (e: React.SyntheticEvent) => void;
   toggleFollow: (
     e: React.SyntheticEvent,
     userId: string,

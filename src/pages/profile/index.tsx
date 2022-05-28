@@ -79,7 +79,7 @@ const Profile: React.FC = () => {
           edit profile
         </Button>
       </Grid>
-      <Grid item p={3}>
+      <Grid item p={3} alignSelf="center">
         <Typography variant="body2">{user.bio}</Typography>
       </Grid>
       <ProfileFeedTab handleTabChange={handleTabChange} tabValue={tabValue} />

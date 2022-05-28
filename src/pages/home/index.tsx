@@ -20,11 +20,12 @@ import useUpdateMeta from "../../hooks/useUpdateMeta";
 import useLoading from "../../hooks/useLoading";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import PublicProfile from "./PublicProfile";
 
 const Home = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { user, isAuthenticated, halfAuth } = useAuth()
+  const { user, isAuthenticated, halfAuth } = useAuth();
 
   isAuthenticated && halfAuth && navigate("/create-profile");
 
@@ -34,6 +35,7 @@ const Home = () => {
   useUpdateMeta(userEmail, toggle);
 
   const { viewHeight } = useViewHeight();
+
   const feed = useAppSelector((state) => state.feed.activeFeed);
   const followActiveRecipe = useAppSelector(
     (state) => state.feed.discovActiveRecipe
@@ -47,12 +49,26 @@ const Home = () => {
 
   const isLoadingFeed = useLoading(recipes.length);
 
+  /**
+   * Function responsible for changing between discover and following feed
+   */
   const changeFeed = (_event: React.SyntheticEvent, newFeed: number) => {
     if (newFeed === 0 && !isAuthenticated) {
       dispatch(updateDialogStatus(true));
       return;
     }
     dispatch(updateActiveFeed(newFeed));
+  };
+
+  /**
+   * Function and state management of public profile drawer
+   */
+  const [publicProfile, setPublicProfile] = useState<boolean>(false);
+  const [publicUser, setPublicUser] = useState<string>();
+
+  const returnToHome = (event: React.SyntheticEvent, id?: string) => {
+    setPublicProfile(!publicProfile);
+    id && setPublicUser(id);
   };
 
   if (isLoadingFeed && feed === 1) return <Loading />;
@@ -90,11 +106,20 @@ const Home = () => {
         >
           {recipes.map((recipe: IRecipePreview) => (
             <SwiperSlide key={recipe._id}>
-              <Recipe recipe={recipe} setToggle={setToggle} />
+              <Recipe
+                recipe={recipe}
+                setToggle={setToggle}
+                returnToHome={returnToHome}
+              />
             </SwiperSlide>
           ))}
         </Swiper>
       )}
+      <PublicProfile
+        returnToHome={returnToHome}
+        publicProfile={publicProfile}
+        publicUser={publicUser}
+      />
       <ActionButtons />
     </Grid>
   );
