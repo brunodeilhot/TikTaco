@@ -6,6 +6,7 @@ export const updateSchema = yup.object({
     .string()
     .lowercase()
     .max(25, "max length is 25 chars")
+    .matches(/^[a-z0-9_.]+$/, "username is invalid")
     .required(),
   picture: yup
     .mixed()
@@ -29,6 +30,7 @@ export const createSchema = yup.object({
     .string()
     .lowercase()
     .max(25, "max length is 25 chars")
+    .matches(/^[a-z0-9_.]+$/, "username is invalid")
     .required(),
   picture: yup
     .mixed()
