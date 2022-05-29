@@ -47,7 +47,7 @@ const SettingsList = () => {
             </ListItemButton>
           ) : (
             <ListItemButton
-              onClick={() => logout({ returnTo: window.location.origin })}
+              onClick={() => logout({ returnTo: process.env.REACT_APP_HOSTNAME })}
               sx={{ width: "100%", paddingX: 2 }}
             >
               {item.icon === null ? null : (

@@ -15,7 +15,10 @@ const useAuth = () => {
   useEffect(() => {
     userEmail &&
       findUserByEmail(userEmail).then((response) => {
-        if (typeof response === "string") return;
+        if (typeof response === "string") {
+          setHalfAuth(true);
+          return;
+        }
         dispatch(updateStoredUser(response));
         setHalfAuth(false);
       });
