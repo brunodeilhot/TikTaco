@@ -14,7 +14,7 @@ root.render(
   <Auth0Provider
     domain={process.env.REACT_APP_DOMAIN}
     clientId={process.env.REACT_APP_CLIENT_ID}
-    redirectUri={`http://${process.env.REACT_APP_HOSTNAME}`}
+    redirectUri={process.env.REACT_APP_HOSTNAME}
   >
     <BrowserRouter>
       <Provider store={store}>
