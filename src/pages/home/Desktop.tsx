@@ -12,6 +12,7 @@ import { Dispatch, SetStateAction, useRef } from "react";
 import NavDesktop from "./NavDesktop";
 import FeedTabs from "../../components/FeedTabs";
 import DesktopPageControl from "./DesktopPageControl";
+import Loading from "../../components/Loading";
 
 interface Props {
   feed: number;
@@ -59,7 +60,7 @@ const Desktop: React.FC<Props> = ({
 
         {recipes.length === 0 && feed === 0 && <NoFollows />}
 
-        {recipes.length > 0 && (
+        {recipeContainer && recipes.length > 0 && (
           <Swiper
             style={{ width: "100%" }}
             height={viewHeight + 1}

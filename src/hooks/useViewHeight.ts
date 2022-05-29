@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 const useViewHeight = (
   ref?: React.RefObject<HTMLDivElement>
 ): { viewHeight: number } => {
-  const [viewHeight, setViewHeight] = useState<number>(window.innerHeight);
+  const [viewHeight, setViewHeight] = useState<number>(
+    ref ? window.innerHeight - (window.innerHeight * 0.1) : window.innerHeight
+  );
   const [debouncedState, setDebounced] = useState<boolean>(false);
 
   const handleResize = () => {

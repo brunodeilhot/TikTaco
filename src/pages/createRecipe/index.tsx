@@ -20,8 +20,9 @@ import Loading from "../../components/Loading";
 import { schema } from "../../models/recipeForm";
 import { Ingredient } from "../../models/recipe";
 import useAuth from "../../hooks/useAuth";
-import { useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import NavDesktop from "../home/NavDesktop";
+import { updateDiscovActRec } from "../../store/feedSlice";
 
 type FormData = {
   title: string;
@@ -39,6 +40,7 @@ export interface Step {
 
 const CreateRecipe: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { isAuthenticated } = useAuth();
   const { createRecipe, uploadRecipeImage } = services;
 
@@ -84,7 +86,8 @@ const CreateRecipe: React.FC = () => {
 
     createRecipe(recipe).then(() => {
       setLoading(false);
-      navigate("/profile");
+      dispatch(updateDiscovActRec(0));
+      navigate("/");
     });
   };
 
@@ -147,8 +150,8 @@ const CreateRecipe: React.FC = () => {
                 textTransform: "uppercase",
                 color: "background.paper",
                 "&:hover": {
-                  backgroundColor: "primary.main"
-                }
+                  backgroundColor: "primary.main",
+                },
               }}
               type="submit"
             >
