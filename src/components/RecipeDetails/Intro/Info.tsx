@@ -1,6 +1,5 @@
 import {
   AccessTimeRounded,
-  FavoriteBorderRounded,
   RestaurantRounded,
 } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";

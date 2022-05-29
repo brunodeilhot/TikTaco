@@ -12,7 +12,6 @@ import { Dispatch, SetStateAction, useRef } from "react";
 import NavDesktop from "./NavDesktop";
 import FeedTabs from "../../components/FeedTabs";
 import DesktopPageControl from "./DesktopPageControl";
-import Loading from "../../components/Loading";
 
 interface Props {
   feed: number;

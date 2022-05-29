@@ -23,6 +23,7 @@ const useViewHeight = (
 
   useEffect(() => {
     handleResize();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const useViewHeight = (
     return () => {
       window.removeEventListener("resize", handleDebounce);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { viewHeight };
