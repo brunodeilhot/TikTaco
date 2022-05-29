@@ -18,7 +18,10 @@ export const updateSchema = yup.object({
     .test(
       "FileType",
       "File must be an image",
-      (value) => !value[0] || (value[0] && process.env.REACT_APP_IMAGE_FORMATS.includes(value[0].type))
+      (value) =>
+        !value[0] ||
+        (value[0] &&
+          process.env.REACT_APP_IMAGE_FORMATS.includes(value[0].type))
     ),
   bio: yup.string().max(250, "max length is 250 chars"),
 });
@@ -34,6 +37,7 @@ export const createSchema = yup.object({
     .required(),
   picture: yup
     .mixed()
+    .test("FileRequired", "Picture is required", (value) => value.length !== 0)
     .test(
       "FileSize",
       "File must be under 1MB",
@@ -42,7 +46,10 @@ export const createSchema = yup.object({
     .test(
       "FileType",
       "File must be an image",
-      (value) => !value[0] || (value[0] && process.env.REACT_APP_IMAGE_FORMATS.includes(value[0].type))
+      (value) =>
+        !value[0] ||
+        (value[0] &&
+          process.env.REACT_APP_IMAGE_FORMATS.includes(value[0].type))
     ),
   bio: yup.string().max(250, "max length is 250 chars"),
 });

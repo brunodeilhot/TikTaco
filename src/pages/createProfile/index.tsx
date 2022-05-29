@@ -53,7 +53,7 @@ const CreateProfile: React.FC = () => {
 
     const updatedUser = {
       ...data,
-      picture: imageName ?? "taco-placeholder.svg",
+      picture: imageName,
     };
 
     const formData = new FormData();
