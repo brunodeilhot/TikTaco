@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +29,9 @@ const CreateProfile: React.FC = () => {
 
   !isAuthenticated && navigate("/");
   isAuthenticated && !halfAuth && navigate("/");
+
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const methods = useForm<FormData>({
     resolver: yupResolver(createSchema),
@@ -79,6 +82,7 @@ const CreateProfile: React.FC = () => {
       flexDirection="column"
       flexWrap="nowrap"
       alignItems="center"
+      paddingX={desktop ? "30%" : 0}
     >
       <Grid
         container
