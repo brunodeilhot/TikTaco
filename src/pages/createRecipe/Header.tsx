@@ -15,9 +15,7 @@ const Header: React.FC<Props> = ({ desktop }) => {
     formState: { errors },
   } = useFormContext();
   const tempPicture = watch("picture") ?? [];
-  const [currentPicture, setPicture] = useState<string>(
-    `${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${process.env.REACT_APP_IMAGE_PLACEHOLDER}`
-  );
+  const [currentPicture, setPicture] = useState<string>(process.env.REACT_APP_IMAGE_PLACEHOLDER);
 
   const changePicture = tempPicture[0];
 

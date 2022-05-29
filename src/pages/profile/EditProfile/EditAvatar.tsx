@@ -16,7 +16,7 @@ const EditAvatar: React.FC<Props> = ({ picture }) => {
   const [currentPicture, setPicture] = useState<string>(
     picture
       ? `${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${picture}`
-      : `${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${process.env.REACT_APP_IMAGE_PLACEHOLDER}`
+      : process.env.REACT_APP_IMAGE_PLACEHOLDER
   );
 
   const changePicture = tempPicture[0];
