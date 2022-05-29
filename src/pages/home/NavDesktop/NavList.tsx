@@ -1,9 +1,7 @@
 import {
   AddBoxRounded,
   HomeRounded,
-  NotificationsRounded,
   PersonRounded,
-  SearchRounded,
 } from "@mui/icons-material";
 import {
   List,
@@ -34,16 +32,6 @@ const NavList = () => {
       name: "Home",
       icon: <HomeRounded sx={{ ml: 2, color: iconColor }} />,
       link: "/",
-    },
-    {
-      name: "Search",
-      icon: <SearchRounded sx={{ ml: 2, color: iconColor }} />,
-      link: "/search",
-    },
-    {
-      name: "Notifications",
-      icon: <NotificationsRounded sx={{ ml: 2, color: iconColor }} />,
-      link: "/notifications",
     },
     {
       name: "Profile",

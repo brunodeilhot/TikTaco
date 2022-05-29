@@ -1,19 +1,11 @@
-import {
-  AddBoxRounded,
-  HomeRounded,
-  NotificationsRounded,
-  PersonRounded,
-  SearchRounded,
-} from "@mui/icons-material";
+import { AddBoxRounded, HomeRounded, PersonRounded } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../hooks";
 import useAuth from "../hooks/useAuth";
-import AlertRoundedOutlined from "../icons/AlertRoundedOutlined";
 import HomeRoundedOutlined from "../icons/HomeRoundedOutlined";
 import PersonRoundedOutlined from "../icons/PersonRoundedOutlined";
-import SearchRoundedOutlined from "../icons/SearchRoundedOutlined";
 import { updateDialogStatus } from "../store/loginDialogSlice";
 
 const ActionButtons: React.FC = () => {
@@ -30,28 +22,12 @@ const ActionButtons: React.FC = () => {
       link: "/",
     },
     {
-      name: "Search",
-      icon: <SearchRoundedOutlined sx={{ color: iconColor }} />,
-      iconSelected: (
-        <SearchRounded fontSize="large" sx={{ color: iconColor }} />
-      ),
-      link: "/search",
-    },
-    {
       name: "Create",
       icon: <AddBoxRounded sx={{ fontSize: "40px", color: iconColor }} />,
       iconSelected: (
         <AddBoxRounded sx={{ fontSize: "40px", color: iconColor }} />
       ),
       link: "/create",
-    },
-    {
-      name: "Notifications",
-      icon: <AlertRoundedOutlined sx={{ color: iconColor }} />,
-      iconSelected: (
-        <NotificationsRounded fontSize="large" sx={{ color: iconColor }} />
-      ),
-      link: "/notifications",
     },
     {
       name: "Profile",
@@ -76,7 +52,8 @@ const ActionButtons: React.FC = () => {
   }, [path]);
 
   const handlePathChange = (_e: React.SyntheticEvent, value: string) => {
-    if (!isAuthenticated && value !== "/") return dispatch(updateDialogStatus(true));
+    if (!isAuthenticated && value !== "/")
+      return dispatch(updateDialogStatus(true));
     if (isAuthenticated && halfAuth) navigate("/create-profile");
     setActive(value);
   };
