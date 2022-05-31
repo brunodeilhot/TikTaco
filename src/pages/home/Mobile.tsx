@@ -50,7 +50,7 @@ const Mobile: React.FC<Props> = ({
 
       {recipes.length > 0 && (
         <Swiper
-          style={{ width: "100%" }}
+          style={{ width: "100vw" }}
           height={viewHeight}
           modules={[Keyboard, Mousewheel]}
           direction={"vertical"}

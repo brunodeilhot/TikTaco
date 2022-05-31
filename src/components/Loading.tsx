@@ -17,6 +17,7 @@ const Loading: React.FC = () => {
       flexWrap="nowrap"
       height={viewHeight}
       width={desktop ? "30vw" : "100vw"}
+      paddingX={desktop ? "30%" : 0}
       sx={{ backgroundColor: "background.default" }}
     >
       <Grid item>
