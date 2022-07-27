@@ -16,7 +16,7 @@ root.render(
     clientId={process.env.REACT_APP_CLIENT_ID}
     redirectUri={process.env.REACT_APP_HOSTNAME}
   >
-    <BrowserRouter basename="TikTaco">
+    <BrowserRouter>
       <Provider store={store}>
         <MainRoutes />
       </Provider>
