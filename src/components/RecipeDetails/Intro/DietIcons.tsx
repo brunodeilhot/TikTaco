@@ -18,19 +18,19 @@ const DietIcons: React.FC<Props> = ({ diet }) => {
   useEffect(() => {
     diet.forEach((type: string) => {
       switch (type) {
-        case "gf":
+        case "GF":
           setStatus(status => ({ ...status, glutenFree: true }));
           break;
-        case "df":
+        case "DF":
           setStatus(status => ({ ...status, dairyFree: true }));
           break;
-        case "v":
+        case "V":
           setStatus(status => ({ ...status, vegan: true }));
           break;
-        case "vv":
+        case "VE":
           setStatus(status => ({ ...status, vegetarian: true }));
           break;
-        case "k":
+        case "K":
           setStatus(status => ({ ...status, keto: true }));
           break;
       }
