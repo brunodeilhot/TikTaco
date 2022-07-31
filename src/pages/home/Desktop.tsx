@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard, Mousewheel } from "swiper";
 import NoFollows from "../../components/NoFollows";
 import { useAppDispatch } from "../../hooks";
-import useViewHeight from "../../hooks/useViewHeight";
+import useViewSize from "../../hooks/useViewSize";
 import { IRecipePreview } from "../../models/recipe";
 import PublicProfile from "./PublicProfile";
 import Recipe from "./Recipe";
@@ -42,7 +42,7 @@ const Desktop: React.FC<Props> = ({
   /**
    * Hook responsible for maintaining the correct inner height of the feed
    */
-  const { viewHeight } = useViewHeight(recipeContainer);
+  const { viewHeight } = useViewSize(recipeContainer);
 
   return (
     <Grid container height="100vh" justifyContent="center" alignItems="center">

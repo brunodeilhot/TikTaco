@@ -1,12 +1,19 @@
-import { Box, CircularProgress, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
-import useViewHeight from "../hooks/useViewHeight";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import useViewSize from "../hooks/useViewSize";
 import Logo from "../assets/Logo.svg";
 
 const Loading: React.FC = () => {
   const theme = useTheme();
   const desktop = useMediaQuery(theme.breakpoints.up("md"));
 
-  const { viewHeight } = useViewHeight();
+  const { viewHeight } = useViewSize();
 
   return (
     <Grid

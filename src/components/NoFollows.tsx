@@ -1,9 +1,9 @@
 import { Box, Grid, Typography } from "@mui/material";
-import useViewHeight from "../hooks/useViewHeight";
+import useViewSize from "../hooks/useViewSize";
 import Logo from "../assets/SadLogo.svg";
 
 const NoFollows: React.FC = () => {
-  const { viewHeight } = useViewHeight();
+  const { viewHeight } = useViewSize();
 
   return (
     <Grid

@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
 
-const useViewHeight = (
+const useViewSize = (
   ref?: React.RefObject<HTMLDivElement>
-): { viewHeight: number } => {
+): { viewHeight: number; viewWidth: number } => {
   const [viewHeight, setViewHeight] = useState<number>(
-    ref ? window.innerHeight - (window.innerHeight * 0.1) : window.innerHeight
+    ref ? window.innerHeight - window.innerHeight * 0.1 : window.innerHeight
   );
+  const [viewWidth, setViewWidth] = useState<number>(window.innerWidth);
   const [debouncedState, setDebounced] = useState<boolean>(false);
 
   const handleResize = () => {
-    !ref && setViewHeight(window.innerHeight);
-    ref && ref.current && setViewHeight(ref.current.clientHeight);
+    if (!ref) {
+      setViewHeight(window.innerHeight);
+      setViewWidth(window.innerWidth);
+    }
+    if (ref && ref.current) {
+      setViewHeight(ref.current.clientHeight);
+      setViewWidth(window.innerWidth);
+    }
     setDebounced(false);
   };
 
@@ -23,7 +30,7 @@ const useViewHeight = (
 
   useEffect(() => {
     handleResize();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]);
 
   useEffect(() => {
@@ -32,10 +39,10 @@ const useViewHeight = (
     return () => {
       window.removeEventListener("resize", handleDebounce);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { viewHeight };
+  return { viewHeight, viewWidth };
 };
 
-export default useViewHeight;
+export default useViewSize;

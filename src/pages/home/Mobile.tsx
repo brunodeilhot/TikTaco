@@ -5,7 +5,7 @@ import ActionButtons from "../../components/ActionButtons";
 import FeedTabs from "../../components/FeedTabs";
 import NoFollows from "../../components/NoFollows";
 import { useAppDispatch } from "../../hooks";
-import useViewHeight from "../../hooks/useViewHeight";
+import useViewSize from "../../hooks/useViewSize";
 import { IRecipePreview } from "../../models/recipe";
 import PublicProfile from "./PublicProfile";
 import Recipe from "./Recipe";
@@ -40,7 +40,7 @@ const Mobile: React.FC<Props> = ({
   /**
    * Hook responsible for maintaining the correct inner height of the feed
    */
-  const { viewHeight } = useViewHeight();
+  const { viewHeight, viewWidth } = useViewSize();
 
   return (
     <Grid container>
@@ -50,7 +50,7 @@ const Mobile: React.FC<Props> = ({
 
       {recipes.length > 0 && (
         <Swiper
-          style={{ width: "100vw" }}
+          style={{ width: viewWidth }}
           height={viewHeight}
           modules={[Keyboard, Mousewheel]}
           direction={"vertical"}

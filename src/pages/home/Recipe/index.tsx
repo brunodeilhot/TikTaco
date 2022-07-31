@@ -110,6 +110,7 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle, returnToHome }) => {
         background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 100%), url(${process.env.REACT_APP_RECIPE_IMAGE_PATH}/${picture})`,
         backgroundColor: "background.default",
         backgroundSize: "cover",
+        backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >

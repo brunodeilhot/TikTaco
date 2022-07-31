@@ -1,4 +1,4 @@
-import { CheckCircleRounded } from "@mui/icons-material";
+import { BorderClear, CheckCircleRounded } from "@mui/icons-material";
 import { Avatar, Grid, IconButton } from "@mui/material";
 import ProfileFollow from "../../../icons/ProfileFollow";
 import { IUserMeta } from "../../../models/user";
@@ -38,7 +38,14 @@ const ProfileBt: React.FC<Props> = ({
         <Avatar
           alt={username}
           src={`${avatarPath}/${picture}`}
-          sx={{ width: 66, height: 66, border: "3px solid #FFF" }}
+          imgProps={{ sx: { border: "3px solid #FFF", borderRadius: "50%" } }}
+          sx={{
+            width: 66,
+            height: 66,
+            background: `url(${avatarPath}/${picture}) no-repeat`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         />
       </IconButton>
       {activeUser !== userId && (

@@ -1,10 +1,4 @@
-import {
-  Dialog,
-  Fade,
-  Grid,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Dialog, Fade, Grid, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import Header from "./Header";
 import Intro from "./Intro";
@@ -26,7 +20,30 @@ const RecipeDetails: React.FC<Props> = ({ open, handleClose, recipeId }) => {
   const theme = useTheme();
   const desktop = useMediaQuery(theme.breakpoints.up("md"));
 
-  if (recipeDetails === null) return <Loading />;
+  if (recipeDetails === null) {
+    return (
+      <Dialog
+        aria-labelledby="recipe-details-title"
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+        transitionDuration={800}
+        fullScreen={!desktop}
+        hideBackdrop={!desktop}
+        PaperProps={{
+          sx: {
+            maxWidth: desktop ? "40%" : "100%",
+            maxHeight: desktop ? "90%" : "100%",
+            width: desktop ? "40%" : "100%",
+            height: desktop ? "90%" : "100%",
+            borderRadius: desktop ? "20px" : 0,
+          },
+        }}
+      >
+        <Loading />
+      </Dialog>
+    );
+  }
   // Destructuring of the recipe details data received from the api
   const { title, picture, diet, servings, time, ingredients, steps, user } =
     recipeDetails;
@@ -47,6 +64,20 @@ const RecipeDetails: React.FC<Props> = ({ open, handleClose, recipeId }) => {
           width: desktop ? "40%" : "100%",
           height: desktop ? "90%" : "100%",
           borderRadius: desktop ? "20px" : 0,
+          borderTopRightRadius: 0,
+          borderBottomRightRadius: 0,
+          scrollbarColor: "#7FD7C3 #383A47",
+          scrollbarWidth: "thin",
+          "&::-webkit-scrollbar": {
+            width: "0.5em",
+          },
+          "&::-webkit-scrollbar-track": {
+            backgroundColor: "#383A47",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#7FD7C3",
+            borderRadius: "10px",
+          },
         },
       }}
     >
