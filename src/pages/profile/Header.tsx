@@ -51,11 +51,19 @@ const Header: React.FC<Props> = ({
           <Avatar
             alt={name}
             src={`${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${picture}`}
+            imgProps={{
+              sx: {
+                border: "3px solid",
+                borderRadius: "50%",
+                borderColor: "primary.main",
+              },
+            }}
             sx={{
               width: 90,
               height: 90,
-              border: "3px solid",
-              borderColor: "primary.main",
+              background: `url(${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${picture}) no-repeat`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           />
         </Grid>

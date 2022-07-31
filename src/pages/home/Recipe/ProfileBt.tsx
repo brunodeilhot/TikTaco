@@ -1,4 +1,4 @@
-import { BorderClear, CheckCircleRounded } from "@mui/icons-material";
+import { CheckCircleRounded } from "@mui/icons-material";
 import { Avatar, Grid, IconButton } from "@mui/material";
 import ProfileFollow from "../../../icons/ProfileFollow";
 import { IUserMeta } from "../../../models/user";
