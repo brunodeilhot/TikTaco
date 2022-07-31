@@ -37,14 +37,14 @@ const ProfileBt: React.FC<Props> = ({
       <IconButton onClick={handleClickAvatar}>
         <Avatar
           alt={username}
-          src={`${avatarPath}/${picture}`}
-          imgProps={{ sx: { border: "3px solid #FFF", borderRadius: "50%" } }}
+          children={<></>}
           sx={{
             width: 66,
             height: 66,
             background: `url(${avatarPath}/${picture}) no-repeat`,
             backgroundSize: "cover",
             backgroundPosition: "center",
+            border: "3px solid #FFF",
           }}
         />
       </IconButton>

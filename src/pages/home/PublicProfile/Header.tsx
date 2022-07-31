@@ -48,20 +48,15 @@ const Header: React.FC<Props> = ({ name, username, picture, returnToHome }) => {
         <Grid item>
           <Avatar
             alt={name}
-            src={`${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${picture}`}
-            imgProps={{
-              sx: {
-                border: "3px solid",
-                borderRadius: "50%",
-                borderColor: "primary.main",
-              },
-            }}
+            children={<></>}
             sx={{
               width: 90,
               height: 90,
               background: `url(${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${picture}) no-repeat`,
               backgroundSize: "cover",
               backgroundPosition: "center",
+              border: "3px solid",
+              borderColor: "primary.main",
             }}
           />
         </Grid>

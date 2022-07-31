@@ -58,20 +58,15 @@ const EditAvatar: React.FC<Props> = ({ picture }) => {
         >
           <Avatar
             alt="edit avatar"
-            src={`${currentPicture}`}
-            imgProps={{
-              sx: {
-                border: "3px solid",
-                borderRadius: "50%",
-                borderColor: "primary.main",
-              },
-            }}
+            children={<></>}
             sx={{
               width: 90,
               height: 90,
               background: `url(${currentPicture}) no-repeat`,
               backgroundSize: "cover",
               backgroundPosition: "center",
+              border: "3px solid",
+              borderColor: "primary.main",
             }}
           />
           <Typography pt={1} sx={{ color: "text.primary" }}>
