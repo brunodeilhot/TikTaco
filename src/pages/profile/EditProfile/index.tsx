@@ -1,6 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ChevronLeftRounded } from "@mui/icons-material";
-import { Button, Drawer, Grid, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Button,
+  Drawer,
+  Grid,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import CustomTextField from "../../createRecipe/CustomTextField";
@@ -12,6 +20,7 @@ import EditAvatar from "./EditAvatar";
 import services from "../../../services";
 import { updateStoredUser } from "../../../store/userSlice";
 import { useAppDispatch } from "../../../hooks";
+import useCompressImage from "../../../hooks/useCompressImage";
 
 type FormData = {
   name: string;
@@ -33,6 +42,7 @@ const EditProfile: React.FC<Props> = ({
   user,
 }) => {
   const dispatch = useAppDispatch();
+  const { compress } = useCompressImage();
   const { updateUser, uploadUserImage } = services;
 
   const theme = useTheme();
@@ -54,7 +64,7 @@ const EditProfile: React.FC<Props> = ({
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     const uniqueId = uuid();
     const tempFile =
       data.picture && data.picture.length !== 0 ? data.picture[0] : undefined;
@@ -68,26 +78,31 @@ const EditProfile: React.FC<Props> = ({
       picture: tempFile ? imageName : tempFile,
     };
 
+    const compressedImage = tempFile && (await compress(tempFile));
+
     const formData = new FormData();
-    tempFile && formData.append("file", tempFile, imageName);
+    compressedImage && formData.append("file", compressedImage, imageName);
 
     setLoading(true);
 
-    tempFile && uploadUserImage(formData);
+    compressedImage && (await uploadUserImage(formData));
 
-    updateUser(updatedUser).then(() => {
-      dispatch(
-        updateStoredUser({
-          ...user,
-          name: data.name ?? user.name,
-          username: data.username ?? user.username,
-          picture: imageName ?? user.picture,
-          bio: data.bio ?? user.bio,
-        })
-      );
-      setLoading(false);
-      returnToProfile();
-    });
+    updateUser(updatedUser)
+      .then(() => {
+        dispatch(
+          updateStoredUser({
+            ...user,
+            name: data.name ?? user.name,
+            username: data.username ?? user.username,
+            picture: imageName ?? user.picture,
+            bio: data.bio ?? user.bio,
+          })
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+        returnToProfile();
+      });
   };
 
   if (loading)
@@ -98,7 +113,7 @@ const EditProfile: React.FC<Props> = ({
     );
 
   return (
-    <Drawer anchor="right" open={editProfile} onClose={returnToProfile} >
+    <Drawer anchor="right" open={editProfile} onClose={returnToProfile}>
       <Grid
         container
         width={desktop ? "30vw" : "100vw"}
@@ -163,7 +178,13 @@ const EditProfile: React.FC<Props> = ({
             <Button
               type="submit"
               variant="contained"
-              sx={{ color: "background.default", mt: 4 }}
+              sx={{
+                color: "background.default",
+                mt: 4,
+                "&:hover": {
+                  backgroundColor: "primary.main",
+                },
+              }}
             >
               Save
             </Button>

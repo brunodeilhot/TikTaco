@@ -23,6 +23,7 @@ import useAuth from "../../hooks/useAuth";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import NavDesktop from "../home/NavDesktop";
 import { updateDiscovActRec } from "../../store/feedSlice";
+import useCompressImage from "../../hooks/useCompressImage";
 
 type FormData = {
   title: string;
@@ -42,6 +43,7 @@ const CreateRecipe: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAuth();
+  const { compress } = useCompressImage();
   const { createRecipe, uploadRecipeImage } = services;
 
   !isAuthenticated && navigate("/");
@@ -61,7 +63,7 @@ const CreateRecipe: React.FC = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     const instructions = data.steps.map((step) => step.step);
     const fileType = data.picture[0].name.split(".");
     const diets = data.diet && data.diet.filter((diet) => diet !== "");
@@ -77,21 +79,31 @@ const CreateRecipe: React.FC = () => {
       diet: diets,
     };
 
+    const compressedImage = await compress(data.picture[0]);
+
     const formData = new FormData();
-    formData.append("file", data.picture[0], imageName);
+    formData.append("file", compressedImage, imageName);
 
     setLoading(true);
 
-    uploadRecipeImage(formData);
+    await uploadRecipeImage(formData);
 
-    createRecipe(recipe).then(() => {
-      setLoading(false);
-      dispatch(updateDiscovActRec(0));
-      navigate("/");
-    });
+    createRecipe(recipe)
+      .then(() => {
+        dispatch(updateDiscovActRec(0));
+      })
+      .finally(() => {
+        setLoading(false);
+        navigate("/");
+      });
   };
 
-  if (loading) return <Loading />;
+  if (loading)
+    return (
+      <Grid container width="100%" justifyContent="center">
+        <Loading />
+      </Grid>
+    );
 
   return (
     <Grid container paddingX={desktop ? "30%" : 0}>

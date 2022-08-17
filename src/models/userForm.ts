@@ -12,8 +12,8 @@ export const updateSchema = yup.object({
     .mixed()
     .test(
       "FileSize",
-      "File must be under 1MB",
-      (value) => !value[0] || (value[0] && value[0].size <= 1024 * 1024)
+      "File must be under 10MB",
+      (value) => !value[0] || (value[0] && value[0].size <= 1024 * 1024 * 10)
     )
     .test(
       "FileType",

@@ -34,12 +34,15 @@ export const schema = yup.object({
     .test("FileRequired", "Picture is required", (value) => value.length !== 0)
     .test(
       "FileSize",
-      "File must be under 1MB",
-      (value) => !value[0] || (value[0] && value[0].size <= 1024 * 1024)
+      "File must be under 10MB",
+      (value) => !value[0] || (value[0] && value[0].size <= 1024 * 1024 * 10)
     )
     .test(
       "FileType",
       "File must be an image",
-      (value) => !value[0] || (value[0] && process.env.REACT_APP_IMAGE_FORMATS.includes(value[0].type))
+      (value) =>
+        !value[0] ||
+        (value[0] &&
+          process.env.REACT_APP_IMAGE_FORMATS.includes(value[0].type))
     ),
 });

@@ -12,7 +12,7 @@ const EditAvatar: React.FC<Props> = ({ picture }) => {
     watch,
     formState: { errors },
   } = useFormContext();
-  const tempPicture = watch("picture") ?? [];
+  const tempPicture: FileList = watch("picture") ?? [];
   const [currentPicture, setPicture] = useState<string>(
     picture
       ? `${process.env.REACT_APP_AVATAR_IMAGE_PATH}/${picture}`
