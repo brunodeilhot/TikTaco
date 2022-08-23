@@ -1,5 +1,5 @@
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { updateActiveFeed } from "../../store/feedSlice";
 import { updateDialogStatus } from "../../store/loginDialogSlice";
@@ -31,7 +31,7 @@ const Home = () => {
    * and sends data to the redux store
    */
   const [toggle, setToggle] = useState(false);
-  useUpdateMeta(userEmail, toggle);
+  const { setLimit } = useUpdateMeta(userEmail, toggle);
 
   /**
    * States that represent the recipes of each feed (following and discover)
@@ -49,6 +49,16 @@ const Home = () => {
   );
 
   const isLoadingFeed = useLoading(recipes.length);
+
+  useEffect(() => {
+    if (
+      followActiveRecipe === recipes.length - 3 ||
+      discovActiveRecipe === recipes.length - 3
+    ) {
+      setLimit((prevState) => prevState + 10);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [followActiveRecipe, discovActiveRecipe]);
 
   /**
    * Function responsible for changing between discover and following feed
@@ -72,7 +82,12 @@ const Home = () => {
     id && setPublicUser(id);
   };
 
-  if (isLoadingFeed && feed === 1) return <Grid container justifyContent="center"><Loading /></Grid>;
+  if (isLoadingFeed && feed === 1)
+    return (
+      <Grid container justifyContent="center">
+        <Loading />
+      </Grid>
+    );
 
   return (
     <>

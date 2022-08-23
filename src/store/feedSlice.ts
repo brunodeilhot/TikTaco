@@ -24,20 +24,24 @@ export const feedSlice = createSlice({
     updateFollowActRec: (state: FeedState, action: PayloadAction<number>) => {
       state.followActiveRecipe = action.payload;
     },
-    followAddRecipes: (state: FeedState, action: PayloadAction<IRecipePreview[]>) => {
-      // state.followRecipes = state.followRecipes.concat(action.payload);
+    followAddRecipes: (
+      state: FeedState,
+      action: PayloadAction<IRecipePreview[]>
+    ) => {
       state.followRecipes = action.payload;
     },
     updateDiscovActRec: (state: FeedState, action: PayloadAction<number>) => {
       state.discovActiveRecipe = action.payload;
     },
-    discovAddRecipes: (state: FeedState, action: PayloadAction<IRecipePreview[]>) => {
-      // state.discovRecipes = state.discovRecipes.concat(action.payload);
+    discovAddRecipes: (
+      state: FeedState,
+      action: PayloadAction<IRecipePreview[]>
+    ) => {
       state.discovRecipes = action.payload;
     },
     updateActiveFeed: (state: FeedState, action: PayloadAction<number>) => {
       state.activeFeed = action.payload;
-    }
+    },
   },
 });
 
