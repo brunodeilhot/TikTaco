@@ -146,7 +146,9 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle, returnToHome }) => {
           activeUser={userState.user._id}
         />
       </Grid>
-      <RecipeDetails open={open} handleClose={handleClose} recipeId={_id} />
+      {open && (
+        <RecipeDetails open={open} handleClose={handleClose} recipeId={_id} />
+      )}
     </Grid>
   );
 };
