@@ -1,4 +1,10 @@
-import { Drawer, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Drawer,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useState } from "react";
 import Loading from "../../../components/Loading";
 import RecipeDetails from "../../../components/RecipeDetails";
@@ -47,7 +53,13 @@ const PublicProfile: React.FC<Props> = ({
 
   return (
     <Drawer anchor="right" open={publicProfile} onClose={returnToHome}>
-      <Grid container flexDirection="column" flexWrap="nowrap" width={desktop ? "27vw" : "100vw"}>
+      <Grid
+        container
+        flexDirection="column"
+        flexWrap="nowrap"
+        width={desktop ? "27vw" : "100vw"}
+        sx={{ overflowY: "scroll" }}
+      >
         <Header
           name={user.name}
           username={user.username}
