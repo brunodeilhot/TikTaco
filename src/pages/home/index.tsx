@@ -77,7 +77,12 @@ const Home = () => {
   const [publicProfile, setPublicProfile] = useState<boolean>(false);
   const [publicUser, setPublicUser] = useState<string>();
 
+  const userId = useAppSelector((state) => state.user.user._id);
+
   const returnToHome = (_event: React.SyntheticEvent, id?: string) => {
+    if (id && id === userId) {
+      return navigate("/profile");
+    }
     setPublicProfile(!publicProfile);
     id && setPublicUser(id);
   };
