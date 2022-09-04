@@ -1,8 +1,4 @@
-import {
-  AddBoxRounded,
-  HomeRounded,
-  PersonRounded,
-} from "@mui/icons-material";
+import { AddBoxRounded, HomeRounded, PersonRounded } from "@mui/icons-material";
 import {
   List,
   ListItem,
@@ -11,7 +7,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 import useAuth from "../../../hooks/useAuth";
 import { updateDialogStatus } from "../../../store/loginDialogSlice";
 
@@ -19,6 +15,7 @@ const NavList = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isAuthenticated, halfAuth } = useAuth();
+  const isGuest = useAppSelector((state) => state.loginDialog.guest);
 
   const iconColor = "primary.main";
 
@@ -41,7 +38,7 @@ const NavList = () => {
   ];
 
   const handleClick = () => {
-    if (!isAuthenticated) return dispatch(updateDialogStatus(true));
+    if (!isAuthenticated && !isGuest) return dispatch(updateDialogStatus(true));
     if (isAuthenticated && halfAuth) navigate("/create-profile");
   };
 
@@ -52,7 +49,7 @@ const NavList = () => {
           <ListItemButton
             onClick={handleClick}
             component={Link}
-            to={!isAuthenticated ? "/" : item.link}
+            to={!isAuthenticated && !isGuest ? "/" : item.link}
             sx={{ width: "100%" }}
           >
             {item.icon === null ? null : (

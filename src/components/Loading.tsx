@@ -9,11 +9,17 @@ import {
 import useViewSize from "../hooks/useViewSize";
 import Logo from "../assets/Logo.svg";
 
-const Loading: React.FC = () => {
+type Props = {
+  fullWidth?: boolean;
+};
+
+const Loading: React.FC<Props> = ({ fullWidth }) => {
   const theme = useTheme();
   const desktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const { viewHeight } = useViewSize();
+
+  const desktopWidth = fullWidth ? "100%" : "30vw";
 
   return (
     <Grid
@@ -23,7 +29,7 @@ const Loading: React.FC = () => {
       flexDirection="column"
       flexWrap="nowrap"
       height={viewHeight}
-      width={desktop ? "30vw" : "100vw"}
+      width={desktop ? desktopWidth : "100vw"}
       paddingX={desktop ? "30%" : 0}
       sx={{ backgroundColor: "background.default" }}
     >

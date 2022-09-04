@@ -1,6 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useState } from "react";
+import {
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
@@ -27,8 +33,10 @@ const CreateProfile: React.FC = () => {
   const { createUser, uploadUserImage } = services;
   const { isAuthenticated, halfAuth, user } = useAuth();
 
-  !isAuthenticated && navigate("/");
-  isAuthenticated && !halfAuth && navigate("/");
+  useEffect(() => {
+    !isAuthenticated && navigate("/");
+    isAuthenticated && !halfAuth && navigate("/");
+  }, [halfAuth, isAuthenticated, navigate]);
 
   const theme = useTheme();
   const desktop = useMediaQuery(theme.breakpoints.up("md"));

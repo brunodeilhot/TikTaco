@@ -6,7 +6,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ActionButtons from "../../components/ActionButtons";
 import RecipeDetails from "../../components/RecipeDetails";
@@ -23,9 +23,12 @@ import SettingsMenu from "./SettingsMenu";
 const Profile: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated, halfAuth } = useAuth();
+  const isGuest = useAppSelector((state) => state.loginDialog.guest);
 
-  !isAuthenticated && navigate("/");
-  isAuthenticated && halfAuth && navigate("/create-profile");
+  useEffect(() => {
+    !isAuthenticated && !isGuest && navigate("/");
+    isAuthenticated && halfAuth && navigate("/create-profile");
+  }, [halfAuth, isAuthenticated, isGuest, navigate]);
 
   const { user } = useAppSelector((state) => state.user);
 

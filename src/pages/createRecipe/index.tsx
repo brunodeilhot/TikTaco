@@ -5,7 +5,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Header from "./Header";
@@ -45,8 +45,11 @@ const CreateRecipe: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const { compress } = useCompressImage();
   const { createRecipe, uploadRecipeImage } = services;
+  const isGuest = useAppSelector((state) => state.loginDialog.guest);
 
-  !isAuthenticated && navigate("/");
+  useEffect(() => {
+    !isAuthenticated && !isGuest && navigate("/");
+  }, [isAuthenticated, isGuest, navigate]);
 
   const { user } = useAppSelector((state) => state.user);
 

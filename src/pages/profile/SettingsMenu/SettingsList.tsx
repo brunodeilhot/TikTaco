@@ -8,16 +8,22 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { loginAsGuest } from "../../../store/loginDialogSlice";
 
 const SettingsList = () => {
-  const { logout } = useAuth0();
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, logout } = useAuth0();
+  const isGuest = useAppSelector((state) => state.loginDialog.guest);
+
+  const handleGuestLogout = () => dispatch(loginAsGuest(false));
 
   const fontColor = "#383A47";
 
   const navList = [
     {
       name: "Logout",
-      icon: <LogoutRounded sx={{ color: fontColor }}/>,
+      icon: <LogoutRounded sx={{ color: fontColor }} />,
       link: "logout",
     },
   ];
@@ -47,7 +53,11 @@ const SettingsList = () => {
             </ListItemButton>
           ) : (
             <ListItemButton
-              onClick={() => logout({ returnTo: process.env.REACT_APP_HOSTNAME })}
+              onClick={() => {
+                isAuthenticated &&
+                  logout({ returnTo: process.env.REACT_APP_HOSTNAME });
+                isGuest && handleGuestLogout();
+              }}
               sx={{ width: "100%", paddingX: 2 }}
             >
               {item.icon === null ? null : (
@@ -55,7 +65,10 @@ const SettingsList = () => {
               )}
               <ListItemText
                 primary={item.name}
-                primaryTypographyProps={{ align: "right", sx: { color: fontColor } }}
+                primaryTypographyProps={{
+                  align: "right",
+                  sx: { color: fontColor },
+                }}
               />
             </ListItemButton>
           )}

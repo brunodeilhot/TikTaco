@@ -40,7 +40,7 @@ const RecipeDetails: React.FC<Props> = ({ open, handleClose, recipeId }) => {
           },
         }}
       >
-        <Loading />
+        <Loading fullWidth />
       </Dialog>
     );
   }

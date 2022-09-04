@@ -18,11 +18,16 @@ const Home = () => {
   const theme = useTheme();
   const desktop = useMediaQuery(theme.breakpoints.up("md"));
 
+  const isGuest = useAppSelector((state) => state.loginDialog.guest);
+
   /**
    * If user is authenticated but has not yet created a profile redirects to create profile page
    */
   const { user, isAuthenticated, halfAuth } = useAuth();
-  isAuthenticated && halfAuth && navigate("/create-profile");
+
+  useEffect(() => {
+    isAuthenticated && halfAuth && navigate("/create-profile");
+  }, [halfAuth, isAuthenticated, navigate]);
 
   const userEmail = user && user.email;
 
@@ -31,7 +36,7 @@ const Home = () => {
    * and sends data to the redux store
    */
   const [toggle, setToggle] = useState(false);
-  const { setLimit } = useUpdateMeta(userEmail, toggle);
+  const { setLimit } = useUpdateMeta(userEmail, toggle, isGuest);
 
   /**
    * States that represent the recipes of each feed (following and discover)
@@ -64,7 +69,7 @@ const Home = () => {
    * Function responsible for changing between discover and following feed
    */
   const changeFeed = (_event: React.SyntheticEvent, newFeed: number) => {
-    if (newFeed === 0 && !isAuthenticated) {
+    if (newFeed === 0 && !isAuthenticated && !isGuest) {
       dispatch(updateDialogStatus(true));
       return;
     }

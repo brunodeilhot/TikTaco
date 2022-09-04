@@ -19,6 +19,7 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle, returnToHome }) => {
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAuth();
   const userState = useAppSelector((state) => state.user);
+  const isGuest = useAppSelector((state) => state.loginDialog.guest);
   const { _id, title, picture, meta, user } = recipe;
 
   const theme = useTheme();
@@ -56,7 +57,7 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle, returnToHome }) => {
     userId: string,
     userIsFollowed: number
   ) => {
-    if (!isAuthenticated) return dispatch(updateDialogStatus(true));
+    if (!isAuthenticated && !isGuest) return dispatch(updateDialogStatus(true));
 
     userIsFollowed === -1
       ? addFollower(userState.user._id, userId).then(() =>
@@ -72,7 +73,7 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle, returnToHome }) => {
     recipeId: string,
     recipeIsLiked: number
   ) => {
-    if (!isAuthenticated) return dispatch(updateDialogStatus(true));
+    if (!isAuthenticated && !isGuest) return dispatch(updateDialogStatus(true));
 
     recipeIsLiked === -1
       ? addLike(recipeId, userState.user._id).then(() =>
@@ -88,7 +89,7 @@ const Recipe: React.FC<Props> = ({ recipe, setToggle, returnToHome }) => {
     recipeId: string,
     recipeIsStarred: number
   ) => {
-    if (!isAuthenticated) return dispatch(updateDialogStatus(true));
+    if (!isAuthenticated && !isGuest) return dispatch(updateDialogStatus(true));
 
     recipeIsStarred === -1
       ? addStar(userState.user._id, recipeId).then(() =>

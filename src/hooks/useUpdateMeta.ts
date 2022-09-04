@@ -6,12 +6,15 @@ import { updateStoredUser } from "../store/userSlice";
 
 const useUpdateMeta = (
   userEmail: string | undefined,
-  toggle?: boolean
+  toggle?: boolean,
+  isGuest?: boolean
 ): { setLimit: React.Dispatch<React.SetStateAction<number>> } => {
   const dispatch = useAppDispatch();
   const { findUserByEmail, feedRecipes } = services;
   const userId = useAppSelector((state) => state.user.user._id);
   const [limit, setLimit] = useState(10);
+
+  const guestEmail = "guest@brunodeilhot.dev";
 
   useEffect(() => {
     userEmail &&
@@ -19,7 +22,13 @@ const useUpdateMeta = (
         if (typeof response === "string") return;
         dispatch(updateStoredUser(response));
       });
-  }, [dispatch, findUserByEmail, userEmail, toggle]);
+
+    isGuest &&
+      findUserByEmail(guestEmail).then((response) => {
+        if (typeof response === "string") return;
+        dispatch(updateStoredUser(response));
+      });
+  }, [dispatch, findUserByEmail, userEmail, toggle, isGuest]);
 
   useEffect(() => {
     feedRecipes(limit).then((response) => {

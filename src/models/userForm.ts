@@ -23,7 +23,7 @@ export const updateSchema = yup.object({
         (value[0] &&
           process.env.REACT_APP_IMAGE_FORMATS.includes(value[0].type))
     ),
-  bio: yup.string().max(250, "max length is 250 chars"),
+  bio: yup.string().max(250, "max length is 250 chars").nullable(true),
 });
 
 export const createSchema = yup.object({
